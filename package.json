@@ -1,0 +1,25 @@
+{
+  "name": "pingcraft",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Synthetic API Health Monitoring, Incident Response & Status Platform",
+  "scripts": {
+    "dev": "node backend/src/server.js",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "start": "node backend/src/server.js",
+    "worker": "node backend/src/worker.js",
+    "test": "npm --prefix backend test",
+    "build": "npm --prefix frontend run build"
+  },
+  "keywords": [
+    "monitoring",
+    "uptime",
+    "mern",
+    "devops",
+    "incidents",
+    "status-page"
+  ],
+  "author": "",
+  "license": "MIT"
+}
