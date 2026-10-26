@@ -7,14 +7,16 @@ const {
   togglePauseMonitor,
   deleteMonitor,
   instantProbe,
-  getMonitorPingLogs
+  getMonitorPingLogs,
+  seedDemoMonitors
 } = require('../controllers/monitorController');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Instant probe can be run with auth
+// Instant probe and sample seeding
 router.post('/instant-probe', protect, instantProbe);
+router.post('/seed', protect, seedDemoMonitors);
 
 router.route('/')
   .post(protect, createMonitor)

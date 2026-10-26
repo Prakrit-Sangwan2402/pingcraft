@@ -84,6 +84,7 @@ export const api = {
     togglePause: (id) => request(`/monitors/${id}/pause`, { method: 'PATCH' }),
     delete: (id) => request(`/monitors/${id}`, { method: 'DELETE' }),
     instantProbe: (probeData) => request('/monitors/instant-probe', { method: 'POST', body: JSON.stringify(probeData) }),
+    seedDemo: () => request('/monitors/seed', { method: 'POST' }),
     getLogs: (id, params = {}) => {
       const qs = new URLSearchParams(params).toString();
       return request(`/monitors/${id}/logs${qs ? `?${qs}` : ''}`);

@@ -426,6 +426,78 @@ async function getMonitorPingLogs(req, res, next) {
   }
 }
 
+// POST /api/monitors/seed (Create sample monitors for quick demo)
+async function seedDemoMonitors(req, res, next) {
+  try {
+    const userId = req.user._id;
+
+    const samples = [
+      {
+        name: 'GitHub Status API',
+        url: 'https://www.githubstatus.com/api/v2/status.json',
+        method: 'GET',
+        expectedStatusCode: 200,
+        intervalSeconds: 15,
+        timeoutMs: 8000,
+        failureThreshold: 2,
+        recoveryThreshold: 2,
+        isPublic: true
+      },
+      {
+        name: 'Cloudflare DNS Service',
+        url: 'https://cloudflare-dns.com/dns-query?name=cloudflare.com&type=A',
+        method: 'GET',
+        headers: { Accept: 'application/dns-json' },
+        expectedStatusCode: 200,
+        intervalSeconds: 30,
+        timeoutMs: 8000,
+        failureThreshold: 2,
+        recoveryThreshold: 2,
+        isPublic: true
+      },
+      {
+        name: 'HttpBin Public Health',
+        url: 'https://httpbin.org/status/200',
+        method: 'GET',
+        expectedStatusCode: 200,
+        intervalSeconds: 30,
+        timeoutMs: 8000,
+        failureThreshold: 2,
+        recoveryThreshold: 2,
+        isPublic: true
+      },
+      {
+        name: 'Simulated Outage Endpoint',
+        url: 'https://httpbin.org/status/503',
+        method: 'GET',
+        expectedStatusCode: 200, // will fail because it returns 503
+        intervalSeconds: 15,
+        timeoutMs: 8000,
+        failureThreshold: 2,
+        recoveryThreshold: 2,
+        isPublic: true
+      }
+    ];
+
+    const created = [];
+    for (const sample of samples) {
+      const exists = await Monitor.findOne({ userId, url: sample.url, isActive: true });
+      if (!exists) {
+        const mon = await Monitor.create({ ...sample, userId });
+        created.push(mon);
+      }
+    }
+
+    res.status(201).json({
+      success: true,
+      message: `Seeded ${created.length} demo monitors.`,
+      data: created
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   createMonitor,
   getMonitors,
@@ -434,5 +506,6 @@ module.exports = {
   togglePauseMonitor,
   deleteMonitor,
   instantProbe,
-  getMonitorPingLogs
+  getMonitorPingLogs,
+  seedDemoMonitors
 };

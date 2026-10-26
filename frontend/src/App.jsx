@@ -6,19 +6,22 @@ import MonitorDetail from './pages/MonitorDetail';
 import IncidentsPage from './pages/IncidentsPage';
 import StatusPageAdmin from './pages/StatusPageAdmin';
 import PublicStatusPage from './pages/PublicStatusPage';
+import UserGuideModal from './components/UserGuideModal';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { Activity } from 'lucide-react';
+import { api } from './api/client';
 
 export default function App() {
   const { user, loading } = useAuth();
 
   // Navigation states
-  const [activeTab, setActiveTab] = useState('monitors'); // 'monitors' | 'monitor-detail' | 'incidents' | 'status-page-admin' | 'public-status'
+  const [activeTab, setActiveTab] = useState('monitors');
   const [selectedMonitorId, setSelectedMonitorId] = useState(null);
   const [selectedIncidentId, setSelectedIncidentId] = useState(null);
   const [publicSlug, setPublicSlug] = useState(null);
-  const [authView, setAuthView] = useState('login'); // 'login' | 'register'
+  const [authView, setAuthView] = useState('login');
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
 
   // Detect public status page route in URL hash (e.g. #/status/acme-api)
   useEffect(() => {
@@ -39,12 +42,24 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, [activeTab]);
 
+  // Seed demo handler from guide
+  const handleSeedDemoFromGuide = async () => {
+    try {
+      await api.monitors.seedDemo();
+      setSelectedMonitorId(null);
+      setActiveTab('monitors');
+      window.location.reload();
+    } catch (err) {
+      alert(`Error loading demo monitors: ${err.message}`);
+    }
+  };
+
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center">
-        <Activity className="w-10 h-10 text-indigo-500 animate-pulse mb-3" />
-        <span className="text-slate-400 text-sm font-medium">Initializing PingCraft...</span>
+      <div className="min-h-screen bg-[#090a0f] flex flex-col items-center justify-center">
+        <Activity className="w-8 h-8 text-zinc-400 animate-pulse mb-2" />
+        <span className="text-zinc-500 text-xs font-mono">Initializing PingCraft...</span>
       </div>
     );
   }
@@ -73,7 +88,7 @@ export default function App() {
 
   // 3. Authenticated App Layout
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#090a0f] text-zinc-100 flex flex-col antialiased selection:bg-zinc-700 selection:text-white">
       <Navbar
         activeTab={activeTab === 'monitor-detail' ? 'monitors' : activeTab}
         onTabChange={(tab) => {
@@ -81,9 +96,10 @@ export default function App() {
           setSelectedIncidentId(null);
           setActiveTab(tab);
         }}
+        onOpenGuide={() => setIsGuideOpen(true)}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
         {activeTab === 'monitors' && (
           <Dashboard
             onSelectMonitor={(id) => {
@@ -91,6 +107,7 @@ export default function App() {
               setActiveTab('monitor-detail');
             }}
             onViewIncidents={() => setActiveTab('incidents')}
+            onOpenGuide={() => setIsGuideOpen(true)}
           />
         )}
 
@@ -129,9 +146,15 @@ export default function App() {
         )}
       </main>
 
-      <footer className="border-t border-slate-900 bg-slate-950/60 py-4 text-center text-xs text-slate-600">
-        PingCraft Synthetic Monitoring Platform • End-Term Software Engineering Project
+      <footer className="border-t border-zinc-800/80 bg-[#090a0f] py-3 text-center text-[11px] text-zinc-600 font-mono">
+        PingCraft Synthetic Monitoring Platform • End-Term MERN Project
       </footer>
+
+      <UserGuideModal
+        isOpen={isGuideOpen}
+        onClose={() => setIsGuideOpen(false)}
+        onSeedDemo={handleSeedDemoFromGuide}
+      />
     </div>
   );
 }

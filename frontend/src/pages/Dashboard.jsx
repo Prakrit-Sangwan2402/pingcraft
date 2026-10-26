@@ -3,7 +3,6 @@ import {
   Activity,
   Plus,
   Search,
-  Filter,
   RefreshCw,
   Play,
   Pause,
@@ -15,7 +14,8 @@ import {
   AlertTriangle,
   Clock,
   Layers,
-  Zap
+  Zap,
+  Sparkles
 } from 'lucide-react';
 import { api } from '../api/client';
 import StatusBadge from '../components/StatusBadge';
@@ -24,9 +24,10 @@ import MonitorModal from '../components/MonitorModal';
 import InstantProbeModal from '../components/InstantProbeModal';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
 
-export default function Dashboard({ onSelectMonitor, onViewIncidents }) {
+export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuide }) {
   const [monitors, setMonitors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [seeding, setSeeding] = useState(false);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -69,6 +70,19 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents }) {
     return () => clearInterval(interval);
   }, [autoRefresh, fetchMonitors]);
 
+  // Quick Seed Demo Monitors
+  const handleSeedDemo = async () => {
+    setSeeding(true);
+    try {
+      await api.monitors.seedDemo();
+      await fetchMonitors();
+    } catch (err) {
+      alert(`Error loading demo monitors: ${err.message}`);
+    } finally {
+      setSeeding(false);
+    }
+  };
+
   // Handle Pause/Resume
   const handleTogglePause = async (e, monitorId) => {
     e.stopPropagation();
@@ -104,36 +118,47 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents }) {
 
   return (
     <div className="space-y-6">
-      {/* Top Banner / Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-800">
+      {/* Top Banner & Quick Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-800">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Monitors Cockpit</h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Real-time health telemetry, continuous synthetic probes, and SLA threshold tracking.
+          <h1 className="text-xl font-bold text-white tracking-tight">Monitors Cockpit</h1>
+          <p className="text-xs text-zinc-400 mt-0.5">
+            Real-time synthetic health monitoring, precision latencies & SLA metrics.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
+          {totalCount === 0 && (
+            <button
+              onClick={handleSeedDemo}
+              disabled={seeding}
+              className="px-3 py-1.5 text-xs font-semibold rounded-md bg-emerald-600 hover:bg-emerald-500 text-white transition-colors flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              {seeding ? 'Loading Demo...' : 'Load Sample Endpoints'}
+            </button>
+          )}
+
           <button
             onClick={() => setIsInstantProbeOpen(true)}
-            className="px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 transition-colors flex items-center gap-1.5 shadow-sm"
+            className="px-3 py-1.5 text-xs font-medium rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-750 transition-colors flex items-center gap-1.5"
           >
-            <Zap className="w-3.5 h-3.5 text-indigo-400" />
+            <Zap className="w-3.5 h-3.5 text-zinc-400" />
             Instant Probe
           </button>
 
           <button
             onClick={() => setIsCreateOpen(true)}
-            className="px-4 py-2 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors flex items-center gap-1.5 shadow-lg shadow-indigo-900/30"
+            className="px-3.5 py-1.5 text-xs font-semibold rounded-md bg-white hover:bg-zinc-200 text-zinc-950 transition-colors flex items-center gap-1.5 shadow-sm"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-3.5 h-3.5" />
             Add Monitor
           </button>
         </div>
       </div>
 
       {/* KPI Overview Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3.5">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         <MetricCard
           title="Total Monitors"
           value={totalCount}
@@ -165,42 +190,42 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents }) {
         <MetricCard
           title="Paused"
           value={pausedCount}
-          subtext="Scheduler probes disabled"
+          subtext="Probes suspended"
           icon={Pause}
           tone="default"
         />
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3 flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="bg-[#12141a] border border-zinc-800/80 rounded-lg p-3 flex flex-col md:flex-row items-center justify-between gap-3">
         {/* Search */}
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
+          <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search by name or URL..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+            className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md pl-8 pr-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600 font-mono"
           />
         </div>
 
         {/* Status Filters */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-1 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
           {[
             { label: 'All', value: '' },
             { label: 'Operational', value: 'OPERATIONAL' },
             { label: 'Degraded', value: 'DEGRADED' },
-            { label: 'Down', value: 'DOWN' },
+            { label: 'Outage', value: 'DOWN' },
             { label: 'Paused', value: 'PAUSED' }
           ].map(f => (
             <button
               key={f.value}
               onClick={() => setStatusFilter(f.value)}
-              className={`px-3 py-1 text-xs rounded-lg font-medium transition-colors whitespace-nowrap ${
+              className={`px-2.5 py-1 text-xs rounded-md font-medium transition-colors whitespace-nowrap ${
                 statusFilter === f.value
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800'
+                  ? 'bg-zinc-800 text-white'
+                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
               }`}
             >
               {f.label}
@@ -209,113 +234,123 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents }) {
         </div>
 
         {/* Auto Refresh Toggle */}
-        <div className="flex items-center gap-2 text-xs text-slate-400 self-end md:self-auto">
+        <div className="flex items-center gap-2.5 text-xs text-zinc-400 self-end md:self-auto font-mono">
           <button
             onClick={() => fetchMonitors()}
             title="Refresh now"
-            className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:text-white"
+            className="p-1 rounded-md bg-[#0b0d12] border border-zinc-800 hover:text-white"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-indigo-400' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-zinc-300' : ''}`} />
           </button>
-          <label className="flex items-center gap-1.5 cursor-pointer">
+          <label className="flex items-center gap-1.5 cursor-pointer text-[11px]">
             <input
               type="checkbox"
               checked={autoRefresh}
               onChange={e => setAutoRefresh(e.target.checked)}
-              className="rounded bg-slate-950 border-slate-800 text-indigo-600 focus:ring-0 w-3.5 h-3.5"
+              className="rounded bg-zinc-900 border-zinc-800 text-zinc-400 focus:ring-0 w-3 h-3"
             />
-            <span>Auto-refresh (15s)</span>
+            <span>Auto-poll (15s)</span>
           </label>
         </div>
       </div>
 
       {/* Monitor Cards List */}
       {loading && monitors.length === 0 ? (
-        <div className="py-16 text-center text-slate-500 text-sm">
-          <Activity className="w-8 h-8 mx-auto mb-2 text-indigo-500 animate-pulse" />
-          Loading monitors telemetry...
+        <div className="py-20 text-center text-zinc-500 text-xs">
+          <Activity className="w-6 h-6 mx-auto mb-2 text-zinc-400 animate-pulse" />
+          Synchronizing telemetry metrics...
         </div>
       ) : monitors.length === 0 ? (
-        <div className="py-16 text-center bg-slate-900/40 border border-dashed border-slate-800 rounded-2xl">
-          <Layers className="w-10 h-10 mx-auto mb-3 text-slate-600" />
-          <h3 className="text-base font-semibold text-slate-300">No monitors found</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1 mb-4">
+        <div className="py-16 text-center bg-[#12141a]/60 border border-dashed border-zinc-800 rounded-xl">
+          <Layers className="w-8 h-8 mx-auto mb-2 text-zinc-600" />
+          <h3 className="text-sm font-semibold text-zinc-200">No monitors configured</h3>
+          <p className="text-xs text-zinc-500 max-w-sm mx-auto mt-1 mb-4">
             {search || statusFilter
-              ? 'No monitors match your current search and status filters.'
-              : 'You have not added any synthetic monitors yet. Start monitoring your first endpoint now!'}
+              ? 'No monitors match your search query.'
+              : 'Add your first synthetic endpoint or load our sample suite with one click.'}
           </p>
-          <button
-            onClick={() => setIsCreateOpen(true)}
-            className="px-4 py-2 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors inline-flex items-center gap-1.5"
-          >
-            <Plus className="w-4 h-4" /> Add First Monitor
-          </button>
+          <div className="flex items-center justify-center gap-2">
+            <button
+              onClick={handleSeedDemo}
+              disabled={seeding}
+              className="px-3.5 py-1.5 text-xs font-semibold rounded-md bg-white hover:bg-zinc-200 text-zinc-950 transition-colors inline-flex items-center gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              {seeding ? 'Loading...' : 'Load Sample Monitors'}
+            </button>
+            <button
+              onClick={() => setIsCreateOpen(true)}
+              className="px-3.5 py-1.5 text-xs font-medium rounded-md bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors inline-flex items-center gap-1.5"
+            >
+              <Plus className="w-3.5 h-3.5" /> Create Custom
+            </button>
+          </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
           {monitors.map(m => (
             <div
               key={m._id}
               onClick={() => onSelectMonitor(m._id)}
-              className="group bg-slate-900/80 hover:bg-slate-900 border border-slate-800 hover:border-slate-700/80 rounded-xl p-5 shadow-lg transition-all cursor-pointer flex flex-col justify-between"
+              className="group bg-[#12141a] hover:bg-[#151821] border border-zinc-800/80 hover:border-zinc-700 rounded-lg p-4 transition-all cursor-pointer flex flex-col justify-between"
             >
               <div>
                 {/* Header: Status & Method */}
-                <div className="flex items-center justify-between gap-2 mb-2.5">
+                <div className="flex items-center justify-between gap-2 mb-2">
                   <StatusBadge status={m.status} size="sm" />
-                  <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700/60">
+                  <span className="font-mono text-[10px] font-semibold px-1.5 py-0.5 rounded bg-zinc-800/80 text-zinc-300 border border-zinc-750">
                     {m.method || 'GET'}
                   </span>
                 </div>
 
                 {/* Name & URL */}
-                <h3 className="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors truncate">
+                <h3 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors truncate">
                   {m.name}
                 </h3>
-                <p className="text-xs font-mono text-slate-400 truncate mt-0.5" title={m.url}>
+                <p className="text-[11px] font-mono text-zinc-400 truncate mt-0.5" title={m.url}>
                   {m.url}
                 </p>
               </div>
 
               {/* Metrics row */}
-              <div className="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2 text-xs">
+              <div className="mt-3.5 pt-3 border-t border-zinc-800/70 grid grid-cols-2 gap-2 text-xs">
                 <div>
-                  <span className="block text-[10px] uppercase font-semibold text-slate-500">24h Uptime</span>
-                  <span className="font-mono font-bold text-slate-200">
+                  <span className="block text-[10px] uppercase font-medium text-zinc-400">24h Uptime</span>
+                  <span className="font-mono font-medium text-zinc-200">
                     {m.uptime24h !== null && m.uptime24h !== undefined ? (
                       <span className={m.uptime24h >= 99 ? 'text-emerald-400' : 'text-amber-400'}>
                         {m.uptime24h}%
                       </span>
                     ) : (
-                      <span className="text-slate-500 font-normal">No data</span>
+                      <span className="text-zinc-600 font-sans text-[11px]">No data</span>
                     )}
                   </span>
                 </div>
 
                 <div>
-                  <span className="block text-[10px] uppercase font-semibold text-slate-500">Last Latency</span>
-                  <span className="font-mono font-bold text-slate-200">
+                  <span className="block text-[10px] uppercase font-medium text-zinc-400">Latency</span>
+                  <span className="font-mono font-medium text-zinc-200">
                     {m.lastLatencyMs !== null && m.lastLatencyMs !== undefined ? (
                       <span className="text-emerald-400">{m.lastLatencyMs} ms</span>
                     ) : (
-                      <span className="text-slate-500 font-normal">Pending</span>
+                      <span className="text-zinc-600 font-sans text-[11px]">Pending</span>
                     )}
                   </span>
                 </div>
               </div>
 
-              {/* Footer: Last Check time & Action buttons */}
-              <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-500">
-                <span className="flex items-center gap-1 font-mono">
-                  <Clock className="w-3 h-3 text-slate-500" />
-                  {m.lastCheckedAt ? new Date(m.lastCheckedAt).toLocaleTimeString() : 'Never'}
+              {/* Footer: Last Check & Controls */}
+              <div className="mt-3.5 pt-2.5 border-t border-zinc-800/70 flex items-center justify-between text-[11px] text-zinc-400">
+                <span className="flex items-center gap-1 font-mono text-[11px]">
+                  <Clock className="w-3 h-3 text-zinc-500" />
+                  {m.lastCheckedAt ? new Date(m.lastCheckedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Never'}
                 </span>
 
-                <div className="flex items-center gap-1.5" onClick={e => e.stopPropagation()}>
+                <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
                   <button
                     onClick={e => handleTogglePause(e, m._id)}
                     title={m.isPaused ? 'Resume monitor' : 'Pause monitor'}
-                    className="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+                    className="p-1 rounded text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
                   >
                     {m.isPaused ? <Play className="w-3.5 h-3.5 fill-current" /> : <Pause className="w-3.5 h-3.5" />}
                   </button>
@@ -326,7 +361,7 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents }) {
                       setEditingMonitor(m);
                     }}
                     title="Edit monitor"
-                    className="p-1 rounded text-slate-400 hover:text-indigo-400 hover:bg-slate-800"
+                    className="p-1 rounded text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
@@ -337,7 +372,7 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents }) {
                       setDeletingMonitor(m);
                     }}
                     title="Delete monitor"
-                    className="p-1 rounded text-slate-400 hover:text-rose-400 hover:bg-slate-800"
+                    className="p-1 rounded text-zinc-400 hover:text-red-400 hover:bg-zinc-800"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -372,7 +407,7 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents }) {
         onClose={() => setDeletingMonitor(null)}
         onConfirm={handleDeleteConfirm}
         title="Delete Monitor"
-        message={`Are you sure you want to delete "${deletingMonitor?.name}"? All historical ping telemetry, response metrics, and incidents associated with this monitor will be permanently removed.`}
+        message={`Delete "${deletingMonitor?.name}"? All historical telemetry and incident audit logs will be permanently deleted.`}
         loading={deleteLoading}
       />
     </div>

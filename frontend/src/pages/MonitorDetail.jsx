@@ -101,9 +101,9 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
 
   if (loading) {
     return (
-      <div className="py-24 text-center text-slate-500 text-sm">
-        <Activity className="w-8 h-8 mx-auto mb-2 text-indigo-500 animate-pulse" />
-        Loading monitor telemetry and metrics...
+      <div className="py-24 text-center text-zinc-500 text-xs">
+        <Activity className="w-6 h-6 mx-auto mb-2 text-zinc-400 animate-pulse" />
+        Loading telemetry and performance metrics...
       </div>
     );
   }
@@ -111,10 +111,10 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
   if (error || !data) {
     return (
       <div className="py-16 text-center">
-        <div className="text-rose-400 mb-2">Error loading monitor: {error}</div>
+        <div className="text-red-400 mb-2 text-xs">Error loading monitor: {error}</div>
         <button
           onClick={onBack}
-          className="px-4 py-2 bg-slate-800 text-slate-200 rounded-lg text-xs"
+          className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-md text-xs hover:text-white"
         >
           Return to Dashboard
         </button>
@@ -127,21 +127,21 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
   const m7d = metrics?.metrics7d;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Navigation & Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-zinc-800">
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <div className="flex items-center gap-2.5">
-              <h1 className="text-xl font-bold text-white tracking-tight">{monitor.name}</h1>
-              <StatusBadge status={monitor.status} />
-              <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg font-bold text-white tracking-tight">{monitor.name}</h1>
+              <StatusBadge status={monitor.status} size="sm" />
+              <span className="font-mono text-[10px] font-semibold px-1.5 py-0.5 rounded bg-zinc-850 text-zinc-300 border border-zinc-750">
                 {monitor.method}
               </span>
             </div>
@@ -149,10 +149,10 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
               href={monitor.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-mono text-indigo-400 hover:underline flex items-center gap-1 mt-0.5"
+              className="text-xs font-mono text-zinc-400 hover:text-zinc-200 hover:underline flex items-center gap-1 mt-0.5"
             >
               {monitor.url}
-              <ExternalLink className="w-3 h-3" />
+              <ExternalLink className="w-3 h-3 text-zinc-500" />
             </a>
           </div>
         </div>
@@ -161,181 +161,178 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsInstantProbeOpen(true)}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 flex items-center gap-1.5"
+            className="px-2.5 py-1.5 text-xs font-medium rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-750 flex items-center gap-1.5"
           >
-            <Zap className="w-3.5 h-3.5 text-indigo-400" />
+            <Zap className="w-3.5 h-3.5 text-zinc-400" />
             Instant Probe
           </button>
 
           <button
             onClick={handleTogglePause}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 flex items-center gap-1.5"
+            className="px-2.5 py-1.5 text-xs font-medium rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-750 flex items-center gap-1.5"
           >
             {monitor.isPaused ? (
               <>
-                <Play className="w-3.5 h-3.5 fill-current text-emerald-400" /> Resume
+                <Play className="w-3 h-3 fill-current text-emerald-400" /> Resume
               </>
             ) : (
               <>
-                <Pause className="w-3.5 h-3.5 text-slate-400" /> Pause
+                <Pause className="w-3 h-3 text-zinc-400" /> Pause
               </>
             )}
           </button>
 
           <button
             onClick={() => setIsEditOpen(true)}
-            className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700"
+            className="p-1.5 rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-750"
           >
-            <Edit2 className="w-4 h-4" />
+            <Edit2 className="w-3.5 h-3.5" />
           </button>
 
           <button
             onClick={() => setIsDeleteOpen(true)}
-            className="p-1.5 rounded-lg bg-slate-900 hover:bg-rose-900/30 text-slate-400 hover:text-rose-400 border border-slate-700"
+            className="p-1.5 rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-red-400 border border-zinc-750"
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
-      {/* Active Incident Banner */}
+      {/* Active Incident Alert Banner */}
       {activeIncident && (
-        <div className="bg-rose-950/40 border border-rose-500/40 rounded-xl p-4 flex items-center justify-between gap-4">
+        <div className="bg-red-950/30 border border-red-800/50 rounded-lg p-3.5 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 shrink-0">
-              <ShieldAlert className="w-5 h-5 animate-pulse" />
+            <div className="h-8 w-8 rounded-md bg-red-900/40 border border-red-700/50 flex items-center justify-center text-red-400 shrink-0">
+              <ShieldAlert className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-rose-400">Active Outage Incident</span>
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-300">
+                <span className="text-xs font-semibold text-red-400 uppercase tracking-wide">Active Outage Incident</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-red-950 border border-red-800 text-red-300">
                   {activeIncident.status}
                 </span>
               </div>
-              <p className="text-xs text-slate-200 mt-0.5 font-medium">
+              <p className="text-xs text-zinc-200 mt-0.5">
                 {activeIncident.triggerReason}
               </p>
-              <span className="text-[11px] text-slate-400">
-                Started: {new Date(activeIncident.startedAt).toLocaleString()}
-              </span>
             </div>
           </div>
 
           <button
             onClick={() => onViewIncident(activeIncident._id)}
-            className="px-3.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold whitespace-nowrap shadow-md shadow-rose-950"
+            className="px-3 py-1.5 rounded-md bg-red-600 hover:bg-red-500 text-white text-xs font-medium whitespace-nowrap shadow-sm"
           >
-            Open Incident War Room
+            War Room &rarr;
           </button>
         </div>
       )}
 
-      {/* SLA & Telemetry KPI Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+      {/* Telemetry KPIs */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <MetricCard
           title="24-Hour Uptime"
           value={m24h?.uptimePercentage !== null && m24h?.uptimePercentage !== undefined ? `${m24h.uptimePercentage}%` : null}
-          subtext={m24h?.totalChecks ? `${m24h.successfulChecks} / ${m24h.totalChecks} checks passed` : 'Insufficient observations'}
+          subtext={m24h?.totalChecks ? `${m24h.successfulChecks} / ${m24h.totalChecks} checks` : 'Insufficient data'}
           icon={CheckCircle2}
           tone={m24h?.uptimePercentage >= 99 ? 'success' : 'warning'}
         />
         <MetricCard
           title="7-Day Uptime"
           value={m7d?.uptimePercentage !== null && m7d?.uptimePercentage !== undefined ? `${m7d.uptimePercentage}%` : null}
-          subtext={m7d?.totalChecks ? `${m7d.successfulChecks} / ${m7d.totalChecks} checks recorded` : 'Insufficient observations'}
+          subtext={m7d?.totalChecks ? `${m7d.successfulChecks} / ${m7d.totalChecks} checks` : 'Insufficient data'}
           icon={Activity}
           tone={m7d?.uptimePercentage >= 99 ? 'success' : 'warning'}
         />
         <MetricCard
           title="Avg Latency (24h)"
           value={m24h?.avgLatencyMs !== null && m24h?.avgLatencyMs !== undefined ? `${m24h.avgLatencyMs} ms` : null}
-          subtext="Mean response duration"
+          subtext="Arithmetic mean"
           icon={Clock}
           tone="default"
         />
         <MetricCard
           title="p95 Latency"
           value={m24h?.p95LatencyMs !== null && m24h?.p95LatencyMs !== undefined ? `${m24h.p95LatencyMs} ms` : null}
-          subtext="95th percentile response ceiling"
+          subtext="Nearest-rank 95th percentile"
           icon={Zap}
-          tone="brand"
+          tone="default"
         />
       </div>
 
       {/* Latency History Chart */}
-      <LatencyChart data={metrics?.chartData || []} height={280} />
+      <LatencyChart data={metrics?.chartData || []} height={260} />
 
-      {/* Historical Telemetry Logs Table */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-lg">
-        <div className="flex items-center justify-between mb-4">
+      {/* Ping Telemetry Table */}
+      <div className="bg-[#12141a] border border-zinc-800/80 rounded-lg p-4">
+        <div className="flex items-center justify-between mb-3">
           <div>
-            <h3 className="text-sm font-bold text-white">Persisted Ping Telemetry Logs</h3>
-            <p className="text-xs text-slate-400">
-              UTC timestamps, exact response durations, and failure classification.
+            <h3 className="text-xs font-semibold text-zinc-200 uppercase tracking-wide">Historical Ping Probes</h3>
+            <p className="text-[11px] text-zinc-500">
+              UTC logs with response latency and failure classification.
             </p>
           </div>
           <button
             onClick={() => fetchLogs(page)}
-            className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white"
+            className="p-1 rounded bg-[#0b0d12] border border-zinc-800 text-zinc-400 hover:text-white"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${logsLoading ? 'animate-spin text-indigo-400' : ''}`} />
+            <RefreshCw className={`w-3 h-3 ${logsLoading ? 'animate-spin text-zinc-300' : ''}`} />
           </button>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 font-semibold border-b border-slate-800">
+            <thead className="bg-[#0b0d12] text-zinc-400 font-medium border-b border-zinc-800">
               <tr>
-                <th className="py-2.5 px-3">Result</th>
-                <th className="py-2.5 px-3">Status Code</th>
-                <th className="py-2.5 px-3">Latency</th>
-                <th className="py-2.5 px-3">Error / Category</th>
-                <th className="py-2.5 px-3">Timestamp (UTC)</th>
+                <th className="py-2 px-3">Result</th>
+                <th className="py-2 px-3">Status</th>
+                <th className="py-2 px-3">Latency</th>
+                <th className="py-2 px-3">Category / Details</th>
+                <th className="py-2 px-3">UTC Timestamp</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 font-mono">
+            <tbody className="divide-y divide-zinc-800/50 font-mono text-[11px]">
               {logs.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="py-8 text-center text-slate-500 font-sans">
-                    No ping logs recorded yet for this monitor.
+                  <td colSpan="5" className="py-6 text-center text-zinc-500 font-sans">
+                    No ping logs persisted yet. Probes run automatically every {monitor.intervalSeconds}s.
                   </td>
                 </tr>
               ) : (
                 logs.map(log => (
-                  <tr key={log._id} className="hover:bg-slate-850/50 transition-colors">
-                    <td className="py-2.5 px-3">
+                  <tr key={log._id} className="hover:bg-zinc-800/30">
+                    <td className="py-2 px-3">
                       {log.success ? (
-                        <span className="inline-flex items-center gap-1 text-emerald-400">
-                          <CheckCircle2 className="w-3.5 h-3.5" /> Pass
+                        <span className="text-emerald-400 font-sans font-medium flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" /> PASS
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-rose-400">
-                          <AlertTriangle className="w-3.5 h-3.5" /> Fail
+                        <span className="text-red-400 font-sans font-medium flex items-center gap-1">
+                          <AlertTriangle className="w-3 h-3" /> FAIL
                         </span>
                       )}
                     </td>
-                    <td className="py-2.5 px-3 font-semibold text-slate-200">
-                      {log.statusCode ? `HTTP ${log.statusCode}` : '—'}
+                    <td className="py-2 px-3 font-semibold text-zinc-200">
+                      {log.statusCode ? `HTTP ${log.statusCode}` : 'ERR'}
                     </td>
-                    <td className="py-2.5 px-3 text-emerald-400 font-medium">
+                    <td className="py-2 px-3 text-zinc-200">
                       {log.latencyMs} ms
                     </td>
-                    <td className="py-2.5 px-3 text-slate-300 max-w-xs truncate font-sans">
+                    <td className="py-2 px-3 text-zinc-400 font-sans max-w-xs truncate">
                       {log.errorCategory !== 'NONE' ? (
-                        <span className="text-rose-400 font-mono text-[11px] bg-rose-500/10 px-1.5 py-0.5 rounded border border-rose-500/20">
+                        <span className="text-red-400 font-mono text-[10px] bg-red-950/50 px-1 py-0.5 rounded border border-red-800/40">
                           {log.errorCategory}
                         </span>
                       ) : (
-                        <span className="text-slate-500">—</span>
+                        <span className="text-zinc-600">—</span>
                       )}
                       {log.errorMessage && (
-                        <span className="block text-[11px] text-slate-400 truncate mt-0.5">
+                        <span className="text-zinc-500 block text-[10px] truncate mt-0.5">
                           {log.errorMessage}
                         </span>
                       )}
                     </td>
-                    <td className="py-2.5 px-3 text-slate-400">
-                      {new Date(log.timestamp || log.createdAt).toISOString().replace('T', ' ').slice(0, 19)} UTC
+                    <td className="py-2 px-3 text-zinc-500">
+                      {new Date(log.timestamp || log.createdAt).toISOString().replace('T', ' ').slice(0, 19)}
                     </td>
                   </tr>
                 ))
@@ -344,24 +341,24 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
           </table>
         </div>
 
-        {/* Pagination controls */}
+        {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between pt-4 mt-2 border-t border-slate-800 text-xs text-slate-400">
+          <div className="flex items-center justify-between pt-3 mt-2 border-t border-zinc-800 text-[11px] text-zinc-500">
             <span>Page {page} of {totalPages}</span>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1">
               <button
                 disabled={page <= 1}
                 onClick={() => fetchLogs(page - 1)}
-                className="p-1 rounded bg-slate-950 border border-slate-800 disabled:opacity-40"
+                className="p-1 rounded bg-[#0b0d12] border border-zinc-800 disabled:opacity-40"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-3.5 h-3.5" />
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => fetchLogs(page + 1)}
-                className="p-1 rounded bg-slate-950 border border-slate-800 disabled:opacity-40"
+                className="p-1 rounded bg-[#0b0d12] border border-zinc-800 disabled:opacity-40"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -387,7 +384,7 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
         onClose={() => setIsDeleteOpen(false)}
         onConfirm={handleDelete}
         title="Delete Monitor"
-        message={`Are you sure you want to delete "${monitor.name}"? All historical telemetry and incidents will be deleted.`}
+        message={`Delete "${monitor.name}"? All persisted ping logs and telemetry will be removed.`}
         loading={deleteLoading}
       />
     </div>

@@ -9,7 +9,7 @@ import {
   CartesianGrid
 } from 'recharts';
 
-function CustomTooltip({ active, payload, label }) {
+function CustomTooltip({ active, payload }) {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     const dateStr = new Date(data.timestamp).toLocaleTimeString([], {
@@ -19,20 +19,20 @@ function CustomTooltip({ active, payload, label }) {
     });
 
     return (
-      <div className="bg-slate-900 border border-slate-700/80 p-3 rounded-lg shadow-xl text-xs space-y-1">
-        <div className="text-slate-400 font-mono">{dateStr}</div>
+      <div className="bg-[#0b0d12] border border-zinc-700 p-2.5 rounded shadow-xl text-xs space-y-1 font-mono">
+        <div className="text-zinc-500 text-[10px]">{dateStr}</div>
         <div className="flex items-center gap-2">
-          <span className="text-slate-300">Latency:</span>
-          <span className="font-semibold text-emerald-400 font-mono">{data.latencyMs} ms</span>
+          <span className="text-zinc-400">Latency:</span>
+          <span className="font-semibold text-emerald-400">{data.latencyMs} ms</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-slate-300">Status:</span>
-          <span className={`font-mono font-medium ${data.success ? 'text-emerald-400' : 'text-rose-400'}`}>
-            {data.statusCode ? `HTTP ${data.statusCode}` : 'Connection Failed'}
+          <span className="text-zinc-400">Status:</span>
+          <span className={data.success ? 'text-emerald-400' : 'text-red-400'}>
+            {data.statusCode ? `HTTP ${data.statusCode}` : 'Check Failed'}
           </span>
         </div>
         {!data.success && data.errorCategory && (
-          <div className="text-rose-400 text-[11px] pt-1 border-t border-slate-800">
+          <div className="text-red-400 text-[10px] pt-1 border-t border-zinc-800">
             {data.errorCategory}
           </div>
         )}
@@ -42,62 +42,61 @@ function CustomTooltip({ active, payload, label }) {
   return null;
 }
 
-export default function LatencyChart({ data = [], height = 260 }) {
+export default function LatencyChart({ data = [], height = 250 }) {
   if (!data || data.length === 0) {
     return (
       <div
         style={{ height }}
-        className="w-full flex flex-col items-center justify-center bg-slate-900/40 border border-dashed border-slate-800 rounded-xl text-slate-500 text-sm"
+        className="w-full flex flex-col items-center justify-center bg-[#12141a]/40 border border-dashed border-zinc-800 rounded-lg text-zinc-500 text-xs"
       >
-        <span className="text-slate-400 font-medium">No telemetry recorded yet</span>
-        <span className="text-xs text-slate-600 mt-1">
-          Historical latency will appear here as scheduled checks execute.
+        <span className="text-zinc-400 font-medium">No telemetry data recorded</span>
+        <span className="text-[11px] text-zinc-600 mt-0.5">
+          Latency points will populate as probes execute.
         </span>
       </div>
     );
   }
 
-  // Format timestamp for X-Axis tick
   const formattedData = data.map(d => ({
     ...d,
     timeLabel: new Date(d.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   }));
 
   return (
-    <div className="w-full bg-slate-900/60 border border-slate-800 rounded-xl p-4">
-      <div className="flex items-center justify-between mb-3 px-1">
-        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+    <div className="w-full bg-[#12141a] border border-zinc-800/80 rounded-lg p-4">
+      <div className="flex items-center justify-between mb-2 px-1">
+        <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wide">
           Response Latency Trend (Last {data.length} checks)
         </span>
-        <span className="text-xs font-mono text-emerald-400">Unit: Milliseconds (ms)</span>
+        <span className="text-[11px] font-mono text-zinc-400">Unit: ms</span>
       </div>
       <div style={{ width: '100%', height }}>
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={formattedData} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
+          <AreaChart data={formattedData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
             <defs>
               <linearGradient id="latencyGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#6366f1" stopOpacity={0.0} />
+                <stop offset="5%" stopColor="#34d399" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#34d399" stopOpacity={0.0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1f242e" />
             <XAxis
               dataKey="timeLabel"
-              stroke="#64748b"
-              tick={{ fontSize: 11, fill: '#64748b' }}
+              stroke="#52525b"
+              tick={{ fontSize: 10, fill: '#71717a' }}
               tickLine={false}
             />
             <YAxis
-              stroke="#64748b"
-              tick={{ fontSize: 11, fill: '#64748b' }}
+              stroke="#52525b"
+              tick={{ fontSize: 10, fill: '#71717a' }}
               tickLine={false}
             />
             <Tooltip content={<CustomTooltip />} />
             <Area
               type="monotone"
               dataKey="latencyMs"
-              stroke="#818cf8"
-              strokeWidth={2}
+              stroke="#10b981"
+              strokeWidth={1.5}
               fillOpacity={1}
               fill="url(#latencyGradient)"
             />

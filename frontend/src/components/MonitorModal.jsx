@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Globe, Sliders, ShieldCheck, AlertCircle, Plus, Trash2 } from 'lucide-react';
+import { X, Sliders, ShieldCheck, AlertCircle, Plus, Trash2 } from 'lucide-react';
 import { api } from '../api/client';
 
 export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null }) {
@@ -82,7 +82,6 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
     setLoading(true);
     setError(null);
 
-    // Build headers map
     const headersMap = {};
     headersList.forEach(({ key, value }) => {
       if (key && key.trim()) {
@@ -112,59 +111,54 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl p-6 shadow-2xl relative my-8">
+      <div className="bg-[#12141c] border border-zinc-800 rounded-lg w-full max-w-xl p-5 shadow-2xl relative my-8 text-zinc-100">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-200"
+          className="absolute top-4 right-4 text-zinc-400 hover:text-white"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
-        <div className="flex items-center gap-3 mb-5">
-          <div className="h-10 w-10 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-            <Sliders className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-white">
-              {isEdit ? 'Edit Monitor Configuration' : 'Create New Synthetic Monitor'}
-            </h3>
-            <p className="text-xs text-slate-400">
-              Configure health checks, consecutive failure SLAs, and auto-recovery rules.
-            </p>
-          </div>
+        <div className="mb-4 pb-3 border-b border-zinc-800">
+          <h3 className="text-base font-bold text-white">
+            {isEdit ? 'Edit Monitor Configuration' : 'Create Synthetic Monitor'}
+          </h3>
+          <p className="text-xs text-zinc-400 mt-0.5">
+            Configure URL, check frequency, and consecutive failure SLA triggers.
+          </p>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-lg bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+          <div className="mb-4 p-2.5 rounded-md bg-red-950/40 border border-red-800/50 text-red-300 text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Monitor Name <span className="text-rose-400">*</span>
+              <label className="block text-xs font-medium text-zinc-300 mb-1">
+                Monitor Name <span className="text-red-400">*</span>
               </label>
               <input
                 type="text"
                 required
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                placeholder="e.g. Authentication Service / Health"
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
+                placeholder="e.g. Authentication Service"
+                className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-medium text-zinc-300 mb-1">
                 HTTP Method
               </label>
               <select
                 value={formData.method}
                 onChange={e => setFormData({ ...formData, method: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
+                className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600 font-mono"
               >
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
@@ -177,11 +171,11 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-semibold text-slate-300">
-                Target Endpoint URL <span className="text-rose-400">*</span>
+              <label className="text-xs font-medium text-zinc-300">
+                Target Endpoint URL <span className="text-red-400">*</span>
               </label>
-              <span className="text-[11px] text-slate-500 flex items-center gap-1 font-mono">
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" /> SSRF Protected
+              <span className="text-[10px] text-zinc-500 font-mono flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-emerald-400" /> SSRF Protected
               </span>
             </div>
             <input
@@ -190,40 +184,39 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
               value={formData.url}
               onChange={e => setFormData({ ...formData, url: e.target.value })}
               placeholder="https://api.yourdomain.com/health"
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:outline-none focus:border-indigo-500"
+              className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600"
             />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Expected Status</label>
+              <label className="block text-[11px] font-medium text-zinc-400 mb-1">Expected Status</label>
               <input
                 type="number"
                 min="100"
                 max="599"
                 value={formData.expectedStatusCode}
                 onChange={e => setFormData({ ...formData, expectedStatusCode: Number(e.target.value) })}
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:outline-none focus:border-indigo-500"
+                className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md px-2.5 py-1.5 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Check Interval</label>
+              <label className="block text-[11px] font-medium text-zinc-400 mb-1">Check Frequency</label>
               <select
                 value={formData.intervalSeconds}
                 onChange={e => setFormData({ ...formData, intervalSeconds: Number(e.target.value) })}
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
+                className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md px-2 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600 font-mono"
               >
                 <option value={15}>Every 15s</option>
                 <option value={30}>Every 30s</option>
-                <option value={60}>Every 1 min</option>
-                <option value={300}>Every 5 min</option>
-                <option value={600}>Every 10 min</option>
+                <option value={60}>Every 60s</option>
+                <option value={300}>Every 5m</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Timeout (ms)</label>
+              <label className="block text-[11px] font-medium text-zinc-400 mb-1">Timeout (ms)</label>
               <input
                 type="number"
                 min="1000"
@@ -231,12 +224,12 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
                 step="1000"
                 value={formData.timeoutMs}
                 onChange={e => setFormData({ ...formData, timeoutMs: Number(e.target.value) })}
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:outline-none focus:border-indigo-500"
+                className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md px-2.5 py-1.5 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Failure SLA</label>
+              <label className="block text-[11px] font-medium text-zinc-400 mb-1">Failure SLA</label>
               <input
                 type="number"
                 min="1"
@@ -244,63 +237,43 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
                 value={formData.failureThreshold}
                 onChange={e => setFormData({ ...formData, failureThreshold: Number(e.target.value) })}
                 title="Consecutive probe failures before incident triggers"
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:outline-none focus:border-indigo-500"
+                className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md px-2.5 py-1.5 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600"
               />
             </div>
           </div>
 
-          {/* SLA Thresholds row */}
-          <div className="grid grid-cols-2 gap-3 p-3 rounded-lg bg-slate-950/60 border border-slate-800/80">
-            <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-0.5">
-                Incident Trigger Threshold
-              </label>
-              <span className="text-xs text-slate-300">
-                Trigger after <b>{formData.failureThreshold}</b> consecutive failures.
-              </span>
-            </div>
-            <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-0.5">
-                Auto-Recovery Threshold
-              </label>
-              <span className="text-xs text-slate-300">
-                Auto-resolve after <b>{formData.recoveryThreshold}</b> consecutive successes.
-              </span>
-            </div>
-          </div>
-
-          {/* Custom Headers Accordion */}
+          {/* Custom Headers */}
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-slate-400">Custom HTTP Headers</span>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[11px] font-medium text-zinc-400">Custom Request Headers</span>
               <button
                 type="button"
                 onClick={addHeaderRow}
-                className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
+                className="text-xs text-zinc-300 hover:text-white flex items-center gap-1"
               >
-                <Plus className="w-3.5 h-3.5" /> Add Header
+                <Plus className="w-3 h-3" /> Add Header
               </button>
             </div>
             {headersList.map((hdr, idx) => (
-              <div key={idx} className="flex gap-2 mb-2 items-center">
+              <div key={idx} className="flex gap-2 mb-1.5 items-center">
                 <input
                   type="text"
-                  placeholder="Header Name (e.g. X-Api-Key)"
+                  placeholder="Name (e.g. X-Api-Key)"
                   value={hdr.key}
                   onChange={e => updateHeaderRow(idx, 'key', e.target.value)}
-                  className="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 font-mono focus:outline-none focus:border-indigo-500"
+                  className="flex-1 bg-[#0b0d12] border border-zinc-800 rounded px-2.5 py-1 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600"
                 />
                 <input
                   type="text"
-                  placeholder="Header Value"
+                  placeholder="Value"
                   value={hdr.value}
                   onChange={e => updateHeaderRow(idx, 'value', e.target.value)}
-                  className="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 font-mono focus:outline-none focus:border-indigo-500"
+                  className="flex-1 bg-[#0b0d12] border border-zinc-800 rounded px-2.5 py-1 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600"
                 />
                 <button
                   type="button"
                   onClick={() => removeHeaderRow(idx)}
-                  className="p-1 text-slate-500 hover:text-rose-400"
+                  className="p-1 text-zinc-500 hover:text-red-400"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -309,39 +282,36 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
           </div>
 
           {/* Public Status Page toggle */}
-          <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+          <div className="flex items-center justify-between pt-2 border-t border-zinc-800">
             <div>
-              <span className="text-xs font-semibold text-slate-200 block">Public Status Page Component</span>
-              <span className="text-[11px] text-slate-400 block">
-                Show this component on your public status page for external visitors.
+              <span className="text-xs font-medium text-zinc-200 block">Public Status Page Visibility</span>
+              <span className="text-[10px] text-zinc-500 block">
+                Expose this monitor's health to external visitors on the public status page.
               </span>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={formData.isPublic}
-                onChange={e => setFormData({ ...formData, isPublic: e.target.checked })}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-            </label>
+            <input
+              type="checkbox"
+              checked={formData.isPublic}
+              onChange={e => setFormData({ ...formData, isPublic: e.target.checked })}
+              className="rounded bg-zinc-900 border-zinc-700 text-zinc-300 focus:ring-0 w-4 h-4 cursor-pointer"
+            />
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-zinc-800">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs font-medium text-zinc-400 hover:text-white rounded transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg shadow-lg shadow-indigo-900/30 transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 text-xs font-semibold text-zinc-950 bg-white hover:bg-zinc-200 rounded shadow-sm transition-colors disabled:opacity-50"
             >
-              {loading ? 'Saving Monitor...' : isEdit ? 'Save Changes' : 'Create Monitor'}
+              {loading ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Monitor'}
             </button>
           </div>
         </form>
