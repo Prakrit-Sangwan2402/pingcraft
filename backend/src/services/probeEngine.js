@@ -1,25 +1,8 @@
-/**
- * PingCraft Synthetic Probe Engine
- *
- * Executes high-precision HTTP synthetic probes against target endpoints.
- * Features:
- * - High-resolution monotonic timing with performance.now()
- * - SSRF pre-validation and IP blocking
- * - Hard configurable timeout with AbortController
- * - Response body size limits (prevents payload bombs / memory exhaustion)
- * - Strict categorization of failure types (HTTP, DNS, TLS, Timeout, Connection)
- * - Safe header sanitization
- */
-
 const { performance } = require('perf_hooks');
 const { validateTargetUrl, sanitizeRequestHeaders } = require('../utils/ssrfValidator');
-const logger = require('../utils/logger');
 
-const MAX_RESPONSE_BYTES = 1024 * 1024; // 1 MB limit
+const MAX_RESPONSE_BYTES = 1024 * 1024;
 
-/**
- * Categorizes network/system errors into standardized categories.
- */
 function categorizeError(err) {
   const code = err.code || err.cause?.code || '';
   const message = (err.message || '').toLowerCase();
@@ -34,13 +17,13 @@ function categorizeError(err) {
     return { category: 'CONNECTION_ERROR', message: `Connection reset: ${code}` };
   }
   if (code === 'EHOSTUNREACH' || code === 'ENETUNREACH') {
-    return { category: 'CONNECTION_ERROR', message: `Host or network unreachable: ${code}` };
+    return { category: 'CONNECTION_ERROR', message: `Host unreachable: ${code}` };
   }
   if (err.name === 'AbortError' || code === 'ABORT_ERR' || message.includes('timeout') || message.includes('aborted')) {
-    return { category: 'TIMEOUT', message: 'Request exceeded maximum timeout limit' };
+    return { category: 'TIMEOUT', message: 'Request exceeded timeout limit' };
   }
   if (code.startsWith('ERR_TLS_') || code.includes('CERT') || message.includes('certificate') || message.includes('tls')) {
-    return { category: 'TLS_ERROR', message: `TLS/SSL handshake failure: ${code || err.message}` };
+    return { category: 'TLS_ERROR', message: `TLS handshake failure: ${code || err.message}` };
   }
   if (message.includes('response body size exceeded')) {
     return { category: 'PAYLOAD_ERROR', message: 'Response payload exceeded size limit (1MB)' };
@@ -49,25 +32,6 @@ function categorizeError(err) {
   return { category: 'UNKNOWN', message: err.message || 'Unknown network error' };
 }
 
-/**
- * Probes a target monitor endpoint.
- *
- * @param {Object} options
- * @param {string} options.url - Target URL
- * @param {string} [options.method='GET'] - HTTP Method
- * @param {Object} [options.headers={}] - Custom headers
- * @param {string} [options.body] - Request body (for POST/PUT/PATCH)
- * @param {number} [options.expectedStatusCode=200] - Status code considered successful
- * @param {number} [options.timeoutMs=10000] - Timeout in milliseconds
- * @returns {Promise<{
- *   success: boolean,
- *   statusCode: number|null,
- *   latencyMs: number,
- *   errorCategory: string,
- *   errorMessage: string|null,
- *   responseSize: number
- * }>}
- */
 async function executeProbe(options) {
   const {
     url,
@@ -78,7 +42,6 @@ async function executeProbe(options) {
     timeoutMs = 10000
   } = options;
 
-  // 1. SSRF Validation
   const ssrfCheck = await validateTargetUrl(url);
   if (!ssrfCheck.valid) {
     return {
@@ -91,12 +54,10 @@ async function executeProbe(options) {
     };
   }
 
-  // 2. Sanitize user-provided headers
   const sanitizedHeaders = sanitizeRequestHeaders(headers);
   sanitizedHeaders['User-Agent'] = 'PingCraft-Synthetic-Monitor/1.0';
   sanitizedHeaders['Accept'] = '*/*';
 
-  // 3. Setup timeout abort controller
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
     controller.abort(new Error('Request timeout reached'));
@@ -111,7 +72,7 @@ async function executeProbe(options) {
       method: method.toUpperCase(),
       headers: sanitizedHeaders,
       signal: controller.signal,
-      redirect: 'manual' // Do not follow redirects automatically to avoid SSRF bypass
+      redirect: 'manual'
     };
 
     if (body && ['POST', 'PUT', 'PATCH'].includes(method.toUpperCase())) {
@@ -125,7 +86,6 @@ async function executeProbe(options) {
     const endMark = performance.now();
     latencyMs = Math.round((endMark - startMark) * 100) / 100;
 
-    // Read response body with size limit guard
     if (response.body) {
       const reader = response.body.getReader();
       while (true) {
@@ -141,7 +101,6 @@ async function executeProbe(options) {
 
     clearTimeout(timeoutId);
 
-    // 4. Compare with expected status code
     const isExpected = response.status === expectedStatusCode;
     if (isExpected) {
       return {

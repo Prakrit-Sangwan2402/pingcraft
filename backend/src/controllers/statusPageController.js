@@ -1,17 +1,8 @@
-/**
- * PingCraft Status Page Controller
- *
- * Provides:
- * - Public, unauthenticated, sanitized status page endpoint
- * - Authenticated status page management endpoints
- */
-
 const StatusPage = require('../models/StatusPage');
 const Monitor = require('../models/Monitor');
 const Incident = require('../models/Incident');
 const { getMonitorWindowMetrics } = require('../services/metricsService');
 
-// GET /api/status-pages/public/:slug (PUBLIC - NO AUTH REQUIRED)
 async function getPublicStatusPage(req, res, next) {
   try {
     const { slug } = req.params;
@@ -28,7 +19,6 @@ async function getPublicStatusPage(req, res, next) {
       });
     }
 
-    // Fetch public monitors associated with this status page
     const monitors = await Monitor.find({
       _id: { $in: page.monitors },
       isActive: true,
@@ -39,7 +29,6 @@ async function getPublicStatusPage(req, res, next) {
 
     const monitorIds = monitors.map(m => m._id);
 
-    // Compute metrics for each component
     let hasDown = false;
     let hasDegraded = false;
     let totalRecordedProbesAcrossAll = 0;
@@ -66,7 +55,6 @@ async function getPublicStatusPage(req, res, next) {
       })
     );
 
-    // Derive overall system status
     let overallStatus = 'ALL_SYSTEMS_OPERATIONAL';
     if (components.length === 0 || totalRecordedProbesAcrossAll === 0) {
       overallStatus = 'NO_DATA';
@@ -76,7 +64,6 @@ async function getPublicStatusPage(req, res, next) {
       overallStatus = 'DEGRADED_PERFORMANCE';
     }
 
-    // Fetch active incidents + recent resolved incidents (past 7 days)
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const incidents = await Incident.find({
       monitorId: { $in: monitorIds },
@@ -121,7 +108,6 @@ async function getPublicStatusPage(req, res, next) {
   }
 }
 
-// GET /api/status-pages/me (AUTHENTICATED)
 async function getMyStatusPage(req, res, next) {
   try {
     let page = await StatusPage.findOne({ userId: req.user._id })
@@ -129,7 +115,6 @@ async function getMyStatusPage(req, res, next) {
       .lean();
 
     if (!page) {
-      // Default initial config if none created yet
       const baseSlug = req.user.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
       const uniqueSlug = `${baseSlug}-${Date.now().toString().slice(-4)}`;
       page = await StatusPage.create({
@@ -151,7 +136,6 @@ async function getMyStatusPage(req, res, next) {
   }
 }
 
-// PUT /api/status-pages/me (AUTHENTICATED)
 async function updateMyStatusPage(req, res, next) {
   try {
     const { slug, title, description, monitors, isPublished } = req.body;
@@ -178,12 +162,10 @@ async function updateMyStatusPage(req, res, next) {
     if (title) page.title = title.trim();
     if (description !== undefined) page.description = description.trim();
     if (monitors && Array.isArray(monitors)) {
-      // Ensure monitors belong to this user and mark them isPublic
       const validMonitors = await Monitor.find({ _id: { $in: monitors }, userId: req.user._id }).select('_id');
       const validIds = validMonitors.map(m => m._id);
       page.monitors = validIds;
 
-      // Update monitor isPublic flag
       await Monitor.updateMany({ _id: { $in: validIds } }, { isPublic: true });
     }
     if (isPublished !== undefined) page.isPublished = Boolean(isPublished);

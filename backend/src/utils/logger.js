@@ -1,8 +1,3 @@
-/**
- * PingCraft Structured Logger
- * Logs messages in ISO UTC format with clean levels and metadata.
- */
-
 const levels = {
   DEBUG: 'DEBUG',
   INFO: 'INFO',
@@ -13,12 +8,13 @@ const levels = {
 const formatMessage = (level, message, meta = {}) => {
   const timestamp = new Date().toISOString();
   const safeMeta = { ...meta };
-  // Redact potentially sensitive keys
+
   for (const key of Object.keys(safeMeta)) {
     if (/token|password|secret|authorization|cookie/i.test(key)) {
       safeMeta[key] = '[REDACTED]';
     }
   }
+
   const metaStr = Object.keys(safeMeta).length > 0 ? ` | ${JSON.stringify(safeMeta)}` : '';
   return `[${timestamp}] [${level}] ${message}${metaStr}`;
 };

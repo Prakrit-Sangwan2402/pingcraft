@@ -62,11 +62,8 @@ const pingLogSchema = new mongoose.Schema(
   }
 );
 
-// Compound indexes for time-window telemetry queries (24h, 7d calculations)
 pingLogSchema.index({ monitorId: 1, createdAt: -1 });
 pingLogSchema.index({ monitorId: 1, timestamp: -1 });
-
-// TTL retention index: automatically prune logs older than 30 days (2,592,000 seconds)
 pingLogSchema.index({ createdAt: 1 }, { expireAfterSeconds: 2592000 });
 
 const PingLog = mongoose.model('PingLog', pingLogSchema);

@@ -1,9 +1,3 @@
-/**
- * PingCraft Authentication & Authorization Middleware
- *
- * Verifies JWT tokens from Authorization header and loads authenticated user.
- */
-
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
@@ -20,22 +14,20 @@ async function protect(req, res, next) {
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: 'Authentication required. Please provide a valid Bearer token.'
+        message: 'Authentication required. Missing Bearer token.'
       });
     }
 
-    // Verify token
     let decoded;
     try {
       decoded = jwt.verify(token, JWT_SECRET);
-    } catch (err) {
+    } catch {
       return res.status(401).json({
         success: false,
         message: 'Invalid or expired authentication token.'
       });
     }
 
-    // Fetch user
     const user = await User.findById(decoded.id).select('-password');
     if (!user) {
       return res.status(401).json({
@@ -56,7 +48,7 @@ function authorize(...roles) {
     if (!req.user || !roles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
-        message: 'Forbidden: You do not have permission to perform this action.'
+        message: 'Forbidden'
       });
     }
     next();

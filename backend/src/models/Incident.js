@@ -47,13 +47,11 @@ const incidentSchema = new mongoose.Schema(
     },
     startedAt: {
       type: Date,
-      required: true,
-      comment: 'Timestamp of the first observed probe failure in this outage'
+      required: true
     },
     detectedAt: {
       type: Date,
-      default: Date.now,
-      comment: 'Timestamp when consecutive failure threshold was reached and incident was opened'
+      default: Date.now
     },
     acknowledgedAt: {
       type: Date,
@@ -85,11 +83,8 @@ const incidentSchema = new mongoose.Schema(
   }
 );
 
-// Compound index for querying unresolved vs resolved incidents per monitor
 incidentSchema.index({ monitorId: 1, status: 1 });
 incidentSchema.index({ userId: 1, createdAt: -1 });
-
-// Partial unique index: A monitor can have AT MOST ONE unresolved incident (resolvedAt === null)
 incidentSchema.index(
   { monitorId: 1, resolvedAt: 1 },
   { unique: true, partialFilterExpression: { resolvedAt: null } }

@@ -1,10 +1,3 @@
-/**
- * PingCraft Unified API Client
- *
- * Implements fetch with automatic Bearer token injection,
- * robust error sanitization, and endpoint abstraction.
- */
-
 const API_BASE = '/api';
 
 function getToken() {
@@ -30,19 +23,16 @@ async function request(endpoint, options = {}) {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const config = {
-    ...options,
-    headers
-  };
-
   let response;
   try {
-    response = await fetch(`${API_BASE}${endpoint}`, config);
+    response = await fetch(`${API_BASE}${endpoint}`, {
+      ...options,
+      headers
+    });
   } catch (netErr) {
-    throw new Error(`Network failure: Unable to reach PingCraft API server (${netErr.message})`);
+    throw new Error(`Unable to reach API server (${netErr.message})`);
   }
 
-  // Handle empty bodies or non-JSON gracefully
   const contentType = response.headers.get('content-type') || '';
   let data = null;
   if (contentType.includes('application/json')) {
@@ -65,14 +55,12 @@ async function request(endpoint, options = {}) {
 }
 
 export const api = {
-  // Auth
   auth: {
     login: (credentials) => request('/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
     register: (userData) => request('/auth/register', { method: 'POST', body: JSON.stringify(userData) }),
     getMe: () => request('/auth/me')
   },
 
-  // Monitors
   monitors: {
     getAll: (params = {}) => {
       const qs = new URLSearchParams(params).toString();
@@ -91,7 +79,6 @@ export const api = {
     }
   },
 
-  // Incidents
   incidents: {
     getAll: (params = {}) => {
       const qs = new URLSearchParams(params).toString();
@@ -101,14 +88,12 @@ export const api = {
     updateStatus: (id, payload) => request(`/incidents/${id}/status`, { method: 'PATCH', body: JSON.stringify(payload) })
   },
 
-  // Status Pages
   statusPages: {
     getPublic: (slug) => request(`/status-pages/public/${slug}`),
     getMy: () => request('/status-pages/me'),
     updateMy: (data) => request('/status-pages/me', { method: 'PUT', body: JSON.stringify(data) })
   },
 
-  // Health
   health: {
     check: () => request('/health')
   }

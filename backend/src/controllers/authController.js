@@ -1,7 +1,3 @@
-/**
- * PingCraft Authentication Controller
- */
-
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { JWT_SECRET } = require('../middleware/auth');
@@ -14,7 +10,6 @@ function generateToken(user) {
   );
 }
 
-// POST /api/auth/register
 async function register(req, res, next) {
   try {
     const { name, email, password } = req.body;
@@ -22,7 +17,7 @@ async function register(req, res, next) {
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide name, email, and password.'
+        message: 'Name, email, and password are required.'
       });
     }
 
@@ -33,7 +28,6 @@ async function register(req, res, next) {
       });
     }
 
-    // Check duplicate
     const existing = await User.findOne({ email: email.toLowerCase().trim() });
     if (existing) {
       return res.status(409).json({
@@ -69,7 +63,6 @@ async function register(req, res, next) {
   }
 }
 
-// POST /api/auth/login
 async function login(req, res, next) {
   try {
     const { email, password } = req.body;
@@ -118,7 +111,6 @@ async function login(req, res, next) {
   }
 }
 
-// GET /api/auth/me
 async function getMe(req, res, next) {
   try {
     res.status(200).json({

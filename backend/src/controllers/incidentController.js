@@ -1,13 +1,6 @@
-/**
- * PingCraft Incident Controller
- *
- * Handles incident inspection, manual state transitions, and audit timeline viewing.
- */
-
 const Incident = require('../models/Incident');
 const { transitionIncidentStatus } = require('../services/incidentService');
 
-// GET /api/incidents
 async function getIncidents(req, res, next) {
   try {
     const userId = req.user._id;
@@ -52,7 +45,6 @@ async function getIncidents(req, res, next) {
   }
 }
 
-// GET /api/incidents/:id
 async function getIncidentById(req, res, next) {
   try {
     const { id } = req.params;
@@ -76,7 +68,6 @@ async function getIncidentById(req, res, next) {
   }
 }
 
-// PATCH /api/incidents/:id/status
 async function updateIncidentStatus(req, res, next) {
   try {
     const { id } = req.params;

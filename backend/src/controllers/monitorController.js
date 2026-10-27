@@ -1,10 +1,3 @@
-/**
- * PingCraft Monitor Controller
- *
- * Implements monitor CRUD, ownership verification, SSRF validation,
- * instant synthetic probes, and paginated telemetry logs.
- */
-
 const Monitor = require('../models/Monitor');
 const PingLog = require('../models/PingLog');
 const Incident = require('../models/Incident');
@@ -14,7 +7,6 @@ const { getMonitorSummaryMetrics, getMonitorWindowMetrics } = require('../servic
 const { processProbeIncidentLogic } = require('../services/incidentService');
 const logger = require('../utils/logger');
 
-// POST /api/monitors
 async function createMonitor(req, res, next) {
   try {
     const userId = req.user._id;
@@ -39,16 +31,14 @@ async function createMonitor(req, res, next) {
       });
     }
 
-    // 1. Check max monitors quota
     const activeCount = await Monitor.countDocuments({ userId, isActive: true });
     if (activeCount >= req.user.maxMonitors) {
       return res.status(403).json({
         success: false,
-        message: `Limit reached: You have reached your maximum quota of ${req.user.maxMonitors} active monitors.`
+        message: `Limit reached: You have reached your quota of ${req.user.maxMonitors} active monitors.`
       });
     }
 
-    // 2. Validate SSRF on URL
     const ssrfCheck = await validateTargetUrl(url);
     if (!ssrfCheck.valid) {
       return res.status(400).json({
@@ -57,7 +47,6 @@ async function createMonitor(req, res, next) {
       });
     }
 
-    // 3. Prevent accidental duplicate monitor submission
     const existing = await Monitor.findOne({
       userId,
       url: url.trim(),
@@ -71,7 +60,6 @@ async function createMonitor(req, res, next) {
       });
     }
 
-    // 4. Create monitor
     const monitor = new Monitor({
       userId,
       name: name.trim(),
@@ -89,7 +77,6 @@ async function createMonitor(req, res, next) {
 
     await monitor.save();
 
-    // 5. Run immediate initial probe in background so monitor has immediate data
     executeProbe({
       url: monitor.url,
       method: monitor.method,
@@ -121,7 +108,7 @@ async function createMonitor(req, res, next) {
       await processProbeIncidentLogic(currentMonitor, probeResult);
       await currentMonitor.save();
     }).catch(err => {
-      logger.error('Error on initial monitor probe', { error: err.message, monitorId: monitor._id });
+      logger.error('Initial probe failed', { error: err.message, monitorId: monitor._id });
     });
 
     res.status(201).json({
@@ -134,7 +121,6 @@ async function createMonitor(req, res, next) {
   }
 }
 
-// GET /api/monitors
 async function getMonitors(req, res, next) {
   try {
     const userId = req.user._id;
@@ -151,7 +137,6 @@ async function getMonitors(req, res, next) {
       query.$or = [{ name: searchRegex }, { url: searchRegex }];
     }
 
-    // Determine sort
     let sortOption = { createdAt: -1 };
     if (sort === 'name') sortOption = { name: 1 };
     else if (sort === '-name') sortOption = { name: -1 };
@@ -161,7 +146,6 @@ async function getMonitors(req, res, next) {
 
     const monitors = await Monitor.find(query).sort(sortOption).lean();
 
-    // Attach rolling 24h uptime summary to each monitor
     const enriched = await Promise.all(
       monitors.map(async m => {
         const metrics = await getMonitorWindowMetrics(m._id, 24);
@@ -183,7 +167,6 @@ async function getMonitors(req, res, next) {
   }
 }
 
-// GET /api/monitors/:id
 async function getMonitorById(req, res, next) {
   try {
     const { id } = req.params;
@@ -196,10 +179,8 @@ async function getMonitorById(req, res, next) {
       });
     }
 
-    // Fetch comprehensive summary metrics and chart points
     const metrics = await getMonitorSummaryMetrics(monitor._id, 50);
 
-    // Fetch active incident if any
     const activeIncident = await Incident.findOne({
       monitorId: monitor._id,
       status: { $ne: 'RESOLVED' }
@@ -218,7 +199,6 @@ async function getMonitorById(req, res, next) {
   }
 }
 
-// PUT /api/monitors/:id
 async function updateMonitor(req, res, next) {
   try {
     const { id } = req.params;
@@ -279,7 +259,6 @@ async function updateMonitor(req, res, next) {
   }
 }
 
-// PATCH /api/monitors/:id/pause
 async function togglePauseMonitor(req, res, next) {
   try {
     const { id } = req.params;
@@ -313,7 +292,6 @@ async function togglePauseMonitor(req, res, next) {
   }
 }
 
-// DELETE /api/monitors/:id
 async function deleteMonitor(req, res, next) {
   try {
     const { id } = req.params;
@@ -326,11 +304,9 @@ async function deleteMonitor(req, res, next) {
       });
     }
 
-    // Soft delete monitor
     monitor.isActive = false;
     await monitor.save();
 
-    // Clean up associated telemetry in background
     Promise.all([
       PingLog.deleteMany({ monitorId: id }),
       Incident.deleteMany({ monitorId: id })
@@ -345,8 +321,6 @@ async function deleteMonitor(req, res, next) {
   }
 }
 
-// POST /api/monitors/instant-probe
-// Can probe either an ad-hoc URL or an existing monitor
 async function instantProbe(req, res, next) {
   try {
     const { url, method = 'GET', headers = {}, body = null, expectedStatusCode = 200, timeoutMs = 10000 } = req.body;
@@ -385,7 +359,6 @@ async function instantProbe(req, res, next) {
   }
 }
 
-// GET /api/monitors/:id/logs (paginated)
 async function getMonitorPingLogs(req, res, next) {
   try {
     const { id } = req.params;
@@ -426,7 +399,6 @@ async function getMonitorPingLogs(req, res, next) {
   }
 }
 
-// POST /api/monitors/seed (Create sample monitors for quick demo)
 async function seedDemoMonitors(req, res, next) {
   try {
     const userId = req.user._id;
@@ -470,7 +442,7 @@ async function seedDemoMonitors(req, res, next) {
         name: 'Simulated Outage Endpoint',
         url: 'https://httpbin.org/status/503',
         method: 'GET',
-        expectedStatusCode: 200, // will fail because it returns 503
+        expectedStatusCode: 200,
         intervalSeconds: 15,
         timeoutMs: 8000,
         failureThreshold: 2,

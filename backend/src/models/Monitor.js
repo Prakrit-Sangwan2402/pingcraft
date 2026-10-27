@@ -43,8 +43,8 @@ const monitorSchema = new mongoose.Schema(
     timeoutMs: {
       type: Number,
       default: 10000,
-      min: [1000, 'Timeout must be at least 1000ms (1s)'],
-      max: [30000, 'Timeout cannot exceed 30000ms (30s)']
+      min: [1000, 'Timeout must be at least 1000ms'],
+      max: [30000, 'Timeout cannot exceed 30000ms']
     },
     intervalSeconds: {
       type: Number,
@@ -119,7 +119,6 @@ const monitorSchema = new mongoose.Schema(
   }
 );
 
-// Compound indexes for high-frequency queries
 monitorSchema.index({ userId: 1, createdAt: -1 });
 monitorSchema.index({ isActive: 1, isPaused: 1, lastCheckedAt: 1 });
 

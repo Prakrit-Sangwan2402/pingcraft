@@ -1,11 +1,3 @@
-/**
- * PingCraft Database Connection Configuration
- *
- * Connects to MongoDB via Mongoose.
- * - In production: requires a valid MONGODB_URI.
- * - In development/test: falls back gracefully to mongodb-memory-server if MONGODB_URI is absent.
- */
-
 const mongoose = require('mongoose');
 const logger = require('../utils/logger');
 
@@ -21,26 +13,25 @@ async function connectDB() {
         serverSelectionTimeoutMS: 8000,
         autoIndex: true
       });
-      logger.info('MongoDB connected successfully', { host: mongoose.connection.host, port: mongoose.connection.port });
+      logger.info('MongoDB connected', { host: mongoose.connection.host, port: mongoose.connection.port });
       return;
     } catch (err) {
-      logger.error('Failed to connect to configured MONGODB_URI', { error: err.message });
+      logger.error('Failed to connect to MONGODB_URI', { error: err.message });
       if (isProduction) {
         throw new Error(`Production database connection failed: ${err.message}`);
       }
-      logger.warn('Falling back to MongoMemoryServer for local development/testing...');
+      logger.warn('Falling back to local in-memory Mongo instance...');
     }
   } else if (isProduction) {
-    throw new Error('FATAL: MONGODB_URI environment variable is required in production mode!');
+    throw new Error('MONGODB_URI is required in production');
   }
 
-  // Development/Test fallback
   try {
     const { MongoMemoryServer } = require('mongodb-memory-server');
     memoryServer = await MongoMemoryServer.create();
     const memUri = memoryServer.getUri();
     await mongoose.connect(memUri, { autoIndex: true });
-    logger.info('Connected to in-memory MongoDB instance for local testing/dev', { uri: memUri });
+    logger.info('Connected to in-memory MongoDB instance', { uri: memUri });
   } catch (memErr) {
     logger.error('Failed to initialize in-memory database', { error: memErr.message });
     throw memErr;
@@ -53,7 +44,6 @@ async function disconnectDB() {
     if (memoryServer) {
       await memoryServer.stop();
     }
-    logger.info('Database disconnected cleanly.');
   } catch (err) {
     logger.error('Error during database disconnect', { error: err.message });
   }
