@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
 const logger = require('../utils/logger');
 
 let memoryServer = null;
@@ -8,6 +9,14 @@ async function connectDB() {
   const isProduction = process.env.NODE_ENV === 'production';
 
   if (uri) {
+    if (uri.startsWith('mongodb+srv://')) {
+      try {
+        dns.setServers(['8.8.8.8', '1.1.1.1']);
+      } catch (dnsErr) {
+        // Fall back to system resolver if custom servers cannot be set
+      }
+    }
+
     try {
       await mongoose.connect(uri, {
         serverSelectionTimeoutMS: 8000,
