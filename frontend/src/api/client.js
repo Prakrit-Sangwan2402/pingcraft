@@ -1,4 +1,5 @@
-const API_BASE = '/api';
+const envApi = import.meta.env.VITE_API_URL;
+const API_BASE = envApi ? envApi.replace(/\/+$/, '') : '/api';
 
 function getToken() {
   return localStorage.getItem('pingcraft_token');
