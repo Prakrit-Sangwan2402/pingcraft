@@ -12,8 +12,9 @@
 
 | Deliverable | Description / URL |
 | :--- | :--- |
+| **Live Frontend App** | [https://pingcraft-gamma.vercel.app](https://pingcraft-gamma.vercel.app) |
+| **Live Backend API** | [https://pingcraft.onrender.com](https://pingcraft.onrender.com) |
 | **GitHub Repository** | [https://github.com/Prakrit-Sangwan2402/pingcraft](https://github.com/Prakrit-Sangwan2402/pingcraft) |
-| **Live Deployment URL** | `[INSERT_DEPLOYED_FRONTEND_URL_HERE]` *(e.g. Vercel / Render)* |
 | **Demo Video Walkthrough** | `[INSERT_DEMO_VIDEO_URL_HERE]` *(3–5 minutes on YouTube Unlisted / Loom / Google Drive)* |
 | **Automated Test Results** | **35 / 35 tests passed** across 4 suites (`npm test`) |
 
@@ -267,7 +268,8 @@ Follow this procedure to demonstrate the full workflow in your demo video:
 
 - **Project Name:** PingCraft
 - **Tech Stack:** MERN (MongoDB Atlas, Express, React 18, Node.js), Tailwind CSS, Recharts
+- **Live Frontend App:** [https://pingcraft-gamma.vercel.app](https://pingcraft-gamma.vercel.app)
+- **Live Backend API:** [https://pingcraft.onrender.com](https://pingcraft.onrender.com)
 - **GitHub Repository:** [https://github.com/Prakrit-Sangwan2402/pingcraft](https://github.com/Prakrit-Sangwan2402/pingcraft)
-- **Live Deployment:** `[INSERT_DEPLOYED_FRONTEND_URL_HERE]`
 - **Demo Video (3–5 Min):** `[INSERT_DEMO_VIDEO_URL_HERE]`
 - **Automated Tests:** 35 passing unit and integration tests (SSRF, Metrics/P95, Incident State Machine, E2E Workflows)
