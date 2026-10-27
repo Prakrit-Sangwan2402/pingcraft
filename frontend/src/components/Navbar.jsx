@@ -33,7 +33,6 @@ export default function Navbar({ activeTab, onTabChange, onOpenGuide }) {
             </div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-base tracking-tight text-white">PingCraft</span>
-              <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">MERN</span>
             </div>
           </div>
 
