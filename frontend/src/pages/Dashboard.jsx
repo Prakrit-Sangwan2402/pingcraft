@@ -128,17 +128,6 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
         </div>
 
         <div className="flex items-center gap-2.5">
-          {totalCount === 0 && (
-            <button
-              onClick={handleSeedDemo}
-              disabled={seeding}
-              className="px-4 py-2.5 text-sm font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50"
-            >
-              <Sparkles className="w-4 h-4" />
-              {seeding ? 'Loading Demo...' : 'Load Sample Endpoints'}
-            </button>
-          )}
-
           <button
             onClick={() => setIsInstantProbeOpen(true)}
             className="px-4 py-2.5 text-sm font-medium rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-750 transition-colors flex items-center gap-2 shadow-sm"
@@ -261,29 +250,36 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
           Synchronizing telemetry metrics...
         </div>
       ) : monitors.length === 0 ? (
-        <div className="py-20 text-center bg-[#12141c]/60 border border-dashed border-zinc-800 rounded-2xl p-6">
+        <div className="py-20 text-center bg-[#12141c]/60 border border-dashed border-zinc-800 rounded-2xl p-8">
           <Layers className="w-12 h-12 mx-auto mb-3 text-zinc-600" />
-          <h3 className="text-base font-bold text-zinc-100">No monitors configured</h3>
+          <h3 className="text-base font-bold text-zinc-100">
+            {search || statusFilter ? 'No matching monitors found' : 'No monitors configured yet'}
+          </h3>
           <p className="text-sm text-zinc-400 max-w-md mx-auto mt-1 mb-6">
             {search || statusFilter
-              ? 'No monitors match your search query.'
-              : 'Add your first synthetic endpoint or load our sample suite with one click to see live latency graphs.'}
+              ? 'Try adjusting your search criteria or resetting the status filter.'
+              : 'Add your first synthetic endpoint to begin tracking latency, SLA uptimes, and automated incident recovery.'}
           </p>
+
           <div className="flex flex-wrap items-center justify-center gap-3">
             <button
-              onClick={handleSeedDemo}
-              disabled={seeding}
-              className="px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-colors inline-flex items-center gap-2 shadow-sm"
-            >
-              <Sparkles className="w-4 h-4" />
-              {seeding ? 'Loading...' : 'Load Sample Monitors'}
-            </button>
-            <button
               onClick={() => setIsCreateOpen(true)}
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors inline-flex items-center gap-2"
+              className="px-5 py-2.5 text-sm font-semibold rounded-lg bg-white hover:bg-zinc-200 text-zinc-950 transition-colors inline-flex items-center gap-2 shadow-sm"
             >
-              <Plus className="w-4 h-4" /> Create Custom
+              <Plus className="w-4 h-4" /> Add Your First Monitor
             </button>
+
+            {!search && !statusFilter && (
+              <button
+                onClick={handleSeedDemo}
+                disabled={seeding}
+                className="px-4 py-2.5 text-sm font-medium rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-750 transition-colors inline-flex items-center gap-2"
+                title="Initialize with sample public API endpoints"
+              >
+                <Sparkles className="w-4 h-4 text-zinc-400" />
+                {seeding ? 'Initializing...' : 'Load Starter Endpoints'}
+              </button>
+            )}
           </div>
         </div>
       ) : (
