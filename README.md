@@ -8,6 +8,17 @@
 
 ---
 
+## 🔗 Project Deliverables & Submission Links
+
+| Deliverable | Description / URL |
+| :--- | :--- |
+| **GitHub Repository** | [https://github.com/Prakrit-Sangwan2402/pingcraft](https://github.com/Prakrit-Sangwan2402/pingcraft) |
+| **Live Deployment URL** | `[INSERT_DEPLOYED_FRONTEND_URL_HERE]` *(e.g. Vercel / Render)* |
+| **Demo Video Walkthrough** | `[INSERT_DEMO_VIDEO_URL_HERE]` *(3–5 minutes on YouTube Unlisted / Loom / Google Drive)* |
+| **Automated Test Results** | **35 / 35 tests passed** across 4 suites (`npm test`) |
+
+---
+
 ## 1. Project Overview
 
 ### Problem Statement
@@ -253,6 +264,10 @@ Follow this procedure to demonstrate the full workflow in your demo video:
 ---
 
 ## 11. Final Submission Details
+
 - **Project Name:** PingCraft
-- **Tech Stack:** MERN (MongoDB, Express, React, Node.js), Tailwind CSS, Recharts
-- **Repository:** Complete Git history with incremental feature commits
+- **Tech Stack:** MERN (MongoDB Atlas, Express, React 18, Node.js), Tailwind CSS, Recharts
+- **GitHub Repository:** [https://github.com/Prakrit-Sangwan2402/pingcraft](https://github.com/Prakrit-Sangwan2402/pingcraft)
+- **Live Deployment:** `[INSERT_DEPLOYED_FRONTEND_URL_HERE]`
+- **Demo Video (3–5 Min):** `[INSERT_DEMO_VIDEO_URL_HERE]`
+- **Automated Tests:** 35 passing unit and integration tests (SSRF, Metrics/P95, Incident State Machine, E2E Workflows)
