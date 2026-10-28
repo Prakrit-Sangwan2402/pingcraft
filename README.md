@@ -15,7 +15,7 @@
 | **Live Frontend App** | [https://pingcraft-gamma.vercel.app](https://pingcraft-gamma.vercel.app) |
 | **Live Backend API** | [https://pingcraft.onrender.com](https://pingcraft.onrender.com) |
 | **GitHub Repository** | [https://github.com/Prakrit-Sangwan2402/pingcraft](https://github.com/Prakrit-Sangwan2402/pingcraft) |
-| **Demo Video Walkthrough** | `[INSERT_DEMO_VIDEO_URL_HERE]` *(3–5 minutes on YouTube Unlisted / Loom / Google Drive)* |
+| **Demo Video Walkthrough** | [Google Drive Demo Video (3–5 Min)](https://drive.google.com/file/d/1K5aO3FWvg8LlN3KmOg_ZQDFwCkPdWv3U/view?usp=drive_link) |
 | **Automated Test Results** | **35 / 35 tests passed** across 4 suites (`npm test`) |
 
 ---
@@ -271,5 +271,5 @@ Follow this procedure to demonstrate the full workflow in your demo video:
 - **Live Frontend App:** [https://pingcraft-gamma.vercel.app](https://pingcraft-gamma.vercel.app)
 - **Live Backend API:** [https://pingcraft.onrender.com](https://pingcraft.onrender.com)
 - **GitHub Repository:** [https://github.com/Prakrit-Sangwan2402/pingcraft](https://github.com/Prakrit-Sangwan2402/pingcraft)
-- **Demo Video (3–5 Min):** `[INSERT_DEMO_VIDEO_URL_HERE]`
+- **Demo Video (3–5 Min):** [Watch Demo Walkthrough on Google Drive](https://drive.google.com/file/d/1K5aO3FWvg8LlN3KmOg_ZQDFwCkPdWv3U/view?usp=drive_link)
 - **Automated Tests:** 35 passing unit and integration tests (SSRF, Metrics/P95, Incident State Machine, E2E Workflows)
