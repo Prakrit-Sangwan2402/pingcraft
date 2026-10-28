@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PingCraft - Demo Video Walkthrough Script</title>
+<style>
+  body {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    color: #1a1a1a;
+    margin: 40px;
+    background-color: #ffffff;
+  }
+  h1 {
+    color: #0f172a;
+    border-bottom: 2px solid #0284c7;
+    padding-bottom: 8px;
+    font-size: 24pt;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-size: 13pt;
+    color: #64748b;
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+  .meta-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 25px;
+    font-size: 11pt;
+  }
+  .meta-box strong { color: #0f172a; }
+  h2 {
+    color: #0369a1;
+    font-size: 14pt;
+    margin-top: 26px;
+    margin-bottom: 8px;
+    border-left: 4px solid #0284c7;
+    padding-left: 10px;
+  }
+  .action {
+    background-color: #f1f5f9;
+    border-left: 3px solid #64748b;
+    padding: 8px 12px;
+    margin: 10px 0;
+    font-style: italic;
+    color: #475569;
+    font-weight: 600;
+    font-size: 10.5pt;
+  }
+  .speech {
+    margin: 10px 0 18px 0;
+    font-size: 11.5pt;
+    color: #0f172a;
+  }
+  .speech blockquote {
+    margin: 0;
+    padding: 0 0 0 14px;
+    border-left: 2px solid #cbd5e1;
+  }
+  ul {
+    margin: 6px 0 12px 20px;
+    padding: 0;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+  .tips-box {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 30px;
+  }
+  .tips-box h3 {
+    color: #166534;
+    margin-top: 0;
+    font-size: 12pt;
+  }
+</style>
+</head>
+<body>
+
+<h1>PingCraft — Demo Video Walkthrough Script</h1>
+<p class="subtitle">Complete 3.5 to 4.5 Minute Presentation Script with Screen Actions &amp; Technical Explanation</p>
+
+<div class="meta-box">
+  <p><strong>Presenter:</strong> Prakrit Sangwan | <strong>Role:</strong> Full-Stack Developer</p>
+  <p><strong>Project:</strong> PingCraft (MERN Synthetic Health Monitoring, Incident Response &amp; Status Platform)</p>
+  <p><strong>Live App URL:</strong> <a href="https://pingcraft-gamma.vercel.app">https://pingcraft-gamma.vercel.app</a></p>
+  <p><strong>Target Duration:</strong> 3 Minutes 30 Seconds to 4 Minutes 30 Seconds</p>
+</div>
+
+<hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
+
+<h2>Part 1: Introduction &amp; Authentication (0:00 – 0:45)</h2>
+
+<div class="action">[ACTION: Screen is on https://pingcraft-gamma.vercel.app at the Sign In page.]</div>
+
+<div class="speech">
+  <blockquote>
+    "Hello everyone, my name is Prakrit Sangwan, and today I’m presenting <strong>PingCraft</strong> — an end-to-end synthetic API health monitoring and incident response platform built on the MERN stack.
+    <br><br>
+    The problem this solves is simple: APIs frequently suffer silent degradation, latency spikes, or sudden 500 errors, and developers usually don't find out until users start complaining. PingCraft continuously pings critical endpoints, measures precision latency, detects outages using configurable failure thresholds, and provides public status pages for transparency.
+    <br><br>
+    On the authentication screen here, any user can register for a new account with email and password, which uses bcrypt hashing and JWT tokens on the backend. Since I already have an account set up, let me log right in."
+  </blockquote>
+</div>
+
+<div class="action">[ACTION: Enter email/password and click 'Sign In'.]</div>
+
+<div class="speech">
+  <blockquote>
+    "Once logged in, you can see my username displayed right here at the top corner along with our session controls."
+  </blockquote>
+</div>
+
+<h2>Part 2: Cockpit Dashboard &amp; Instant Probe with SSRF Defense (0:45 – 1:45)</h2>
+
+<div class="action">[ACTION: Land on the main Monitors Cockpit dashboard.]</div>
+
+<div class="speech">
+  <blockquote>
+    "This is the Monitors Cockpit. At the top, we have system-wide KPIs: Total Monitors, Operational count, Degraded, Down, and Paused services. 
+    <br><br>
+    Before setting up scheduled background jobs, PingCraft includes an <strong>Instant Probe</strong> tool for real-time diagnostics. Let me open it."
+  </blockquote>
+</div>
+
+<div class="action">[ACTION: Click 'Instant Probe' button. Modal pops up.]</div>
+
+<div class="speech">
+  <blockquote>
+    "This lets engineers test an endpoint on demand. But more importantly, this is where our custom <strong>SSRF Protection Engine</strong> kicks in. Because users can submit arbitrary URLs, attackers often try to target internal infrastructure.
+    <br><br>
+    Let's test that. If I try to probe <code>http://localhost:5000</code> or an AWS internal metadata IP like <code>169.254.169.254</code>..."
+  </blockquote>
+</div>
+
+<div class="action">[ACTION: Type http://localhost:5000/api/health and click 'Run Probe'.]</div>
+
+<div class="speech">
+  <blockquote>
+    "...the request is immediately blocked by our backend DNS validator before any outbound packet is dispatched.
+    <br><br>
+    Now let’s test a legitimate public API, like <code>https://api.github.com</code>."
+  </blockquote>
+</div>
+
+<div class="action">[ACTION: Type https://api.github.com and click 'Run Probe'.]</div>
+
+<div class="speech">
+  <blockquote>
+    "Within milliseconds, we get the HTTP 200 OK status, the exact response time measured using Node's monotonic <code>performance.now()</code> clock, response payload size, and the sanitized response headers."
+  </blockquote>
+</div>
+
+<h2>Part 3: Monitor Configuration &amp; Telemetry Analytics (1:45 – 2:45)</h2>
+
+<div class="action">[ACTION: Close Instant Probe modal. Click 'Add Monitor' or 'Load Starter Endpoints'.]</div>
+
+<div class="speech">
+  <blockquote>
+    "Now let's configure a continuous synthetic monitor. Clicking <strong>Add Monitor</strong> opens our configuration panel. 
+    <br><br>
+    Here we can set:
+    <ul>
+      <li>The HTTP method: GET, POST, PUT, DELETE, or HEAD</li>
+      <li>Custom request headers and JSON payloads</li>
+      <li>Check interval — for example every 15 or 30 seconds</li>
+      <li>And our SLA thresholds: consecutive failures required to trigger an outage, and consecutive successes required to auto-recover.</li>
+    </ul>
+    Let's open one of our active monitors to view its deep analytics."
+  </blockquote>
+</div>
+
+<div class="action">[ACTION: Click on any monitor card to open the Monitor Detail page.]</div>
+
+<div class="speech">
+  <blockquote>
+    "Here in the detail view:
+    <ul>
+      <li>We have rolling <strong>24-hour and 7-day uptime percentages</strong> computed via our dedicated backend metrics service. If there’s not enough data, it honestly reports 'No data' rather than faking 100%.</li>
+      <li>This responsive chart uses Recharts to plot our response latency trends over time, alongside the nearest-rank 95th percentile (p95) latency.</li>
+      <li>Down below is the paginated ping log, showing UTC timestamps, exact HTTP status codes, and latency for every single probe.</li>
+      <li>We can also pause the monitor anytime with one click, which immediately excludes it from the scheduler workload."</li>
+    </ul>
+  </blockquote>
+</div>
+
+<h2>Part 4: Incident State Machine &amp; Auto-Recovery (2:45 – 3:45)</h2>
+
+<div class="action">[ACTION: Click on the 'Incidents' tab in the top navigation.]</div>
+
+<div class="speech">
+  <blockquote>
+    "Next is the <strong>Incident War Room</strong>. When an endpoint fails its consecutive failure threshold, the monitor flips from <code>DEGRADED</code> to <code>DOWN</code>, and PingCraft's deterministic state machine automatically triggers a new incident. 
+    <br><br>
+    Our backend enforces database-level partial unique indexes to guarantee that a monitor can have at most one active incident at a time, preventing alert fatigue and duplicate incident spam.
+    <br><br>
+    Responders can track the full lifecycle: moving an incident from <code>TRIGGERED</code> to <code>INVESTIGATING</code> with responder notes, then to <code>MITIGATING</code>."
+  </blockquote>
+</div>
+
+<div class="action">[ACTION: Click on an incident, update status to 'INVESTIGATING', and show the timeline updating.]</div>
+
+<div class="speech">
+  <blockquote>
+    "Every action is logged in an append-only audit timeline showing who did what and when. 
+    <br><br>
+    Even better: once the monitored service comes back online and meets its recovery threshold, the background scheduler automatically resolves the incident, logs the total downtime duration, and restores the monitor to <code>OPERATIONAL</code> without needing manual intervention."
+  </blockquote>
+</div>
+
+<h2>Part 5: Branded Public Status Page (3:45 – 4:15)</h2>
+
+<div class="action">[ACTION: Click 'Status Page' in navigation or open /#/status/api-status in a new tab.]</div>
+
+<div class="speech">
+  <blockquote>
+    "For external communication, PingCraft provides clean, branded <strong>Public Status Pages</strong>.
+    <br><br>
+    This route is completely unauthenticated and accessible to customers or stakeholders. It displays real-time operational status, component-level health, and ongoing incident notices without leaking any internal tokens or sensitive server configuration."
+  </blockquote>
+</div>
+
+<h2>Part 6: Tech Stack &amp; Automated Test Suite (4:15 – 4:45)</h2>
+
+<div class="action">[ACTION: Switch window to VS Code or Terminal showing 'npm test' output.]</div>
+
+<div class="speech">
+  <blockquote>
+    "Under the hood, the entire architecture is built using:
+    <ul>
+      <li><strong>React 18 and Tailwind CSS</strong> on the frontend with Vite, deployed live on Vercel.</li>
+      <li><strong>Node.js and Express</strong> on the backend, hosted on Render.</li>
+      <li><strong>MongoDB Atlas with Mongoose</strong> for scalable document storage with compound indexing.</li>
+      <li>Monotonic high-resolution timers and a background scheduler running parallel non-blocking probes.</li>
+    </ul>
+    Quality assurance is verified through an automated Jest and Supertest suite. As you can see right here in the terminal: all <strong>35 unit and integration tests</strong> covering SSRF validation, p95 mathematics, incident state machine transitions, and API workflows are passing with zero errors.
+    <br><br>
+    Both the live web application on Vercel and the open-source GitHub repository are linked in the description. Thank you for watching!"
+  </blockquote>
+</div>
+
+<div class="tips-box">
+  <h3>Quick Recording Checklist</h3>
+  <ul>
+    <li>Record in 1080p full screen (hide unnecessary browser bookmark bars).</li>
+    <li>Speak clearly at a steady pace — 4 minutes is ample time.</li>
+    <li>Upload as <strong>Unlisted</strong> on YouTube (or Google Drive with link set to <em>"Anyone with the link can view"</em>).</li>
+    <li>Submit form: <a href="https://forms.gle/sBy4sfqyiRG2Zpom9">https://forms.gle/sBy4sfqyiRG2Zpom9</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
