@@ -117,28 +117,31 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
   const pausedCount = monitors.filter(m => m.status === 'PAUSED').length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-sans">
       {/* Top Banner & Quick Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-[#1D2733]">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 pb-4 border-b border-[#D4CCBE]">
         <div>
-          <h1 className="text-2xl font-semibold text-[#E8EDF4] tracking-tight">Monitors Cockpit</h1>
-          <p className="text-xs text-[#9AA8B8] mt-1">
-            Real-time synthetic health monitoring, precision latencies & SLA metrics.
+          <span className="text-[10px] font-mono uppercase tracking-widest text-[#D84A2F] block mb-1">
+            Telemetry Register
+          </span>
+          <h1 className="text-3xl font-serif font-normal text-[#252720] tracking-tight">Monitors Cockpit</h1>
+          <p className="text-xs text-[#77766B] mt-1">
+            Continuous synthetic probes, high-precision latency measurement & SLA metrics.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setIsInstantProbeOpen(true)}
-            className="px-3.5 py-2 text-xs font-medium rounded-lg bg-[#131A23] hover:bg-[#192330] text-[#E8EDF4] border border-[#263241] transition-colors flex items-center gap-2 shadow-sm"
+            className="px-3.5 py-1.5 text-xs font-mono rounded-sm bg-[#FAF8F2] hover:bg-[#E8E1D5] text-[#252720] border border-[#D4CCBE] transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
           >
-            <Zap className="w-3.5 h-3.5 text-[#3DD6C6]" />
+            <Zap className="w-3.5 h-3.5 text-[#D84A2F]" />
             Instant Probe
           </button>
 
           <button
             onClick={() => setIsCreateOpen(true)}
-            className="px-4 py-2 text-xs font-semibold rounded-lg bg-[#3DD6C6] hover:bg-[#59E2D2] text-[#0B0F14] transition-colors flex items-center gap-2 shadow-sm"
+            className="px-4 py-1.5 text-xs font-medium rounded-sm bg-[#D84A2F] hover:bg-[#D84A2F]/90 text-white transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Add Monitor
@@ -151,7 +154,7 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
         <MetricCard
           title="Total Monitors"
           value={totalCount}
-          subtext="Active synthetic monitors"
+          subtext="Active synthetic targets"
           icon={Layers}
           tone="default"
         />
@@ -186,16 +189,16 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-[#131A23] border border-[#263241] rounded-xl p-3 flex flex-col md:flex-row items-center justify-between gap-3 shadow-sm">
+      <div className="bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm p-3 flex flex-col md:flex-row items-center justify-between gap-3 shadow-sm">
         {/* Search */}
         <div className="relative w-full md:w-80">
-          <Search className="w-3.5 h-3.5 text-[#687789] absolute left-3 top-2.5" />
+          <Search className="w-3.5 h-3.5 text-[#77766B] absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search by name or URL..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full bg-[#0E131A] border border-[#263241] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#E8EDF4] placeholder-[#687789] focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6] font-mono"
+            className="w-full bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm pl-9 pr-3 py-1.5 text-xs text-[#252720] placeholder-[#77766B] focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F] font-mono"
           />
         </div>
 
@@ -211,10 +214,10 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
             <button
               key={f.value}
               onClick={() => setStatusFilter(f.value)}
-              className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors whitespace-nowrap ${
+              className={`px-3 py-1 text-xs rounded-sm font-mono transition-colors whitespace-nowrap cursor-pointer ${
                 statusFilter === f.value
-                  ? 'bg-[#192330] text-[#E8EDF4] border border-[#263241] shadow-sm'
-                  : 'text-[#9AA8B8] hover:text-[#E8EDF4] hover:bg-[#0E131A]'
+                  ? 'bg-[#292B24] text-[#FAF8F2] shadow-sm'
+                  : 'text-[#77766B] hover:text-[#252720] hover:bg-[#E8E1D5]/60'
               }`}
             >
               {f.label}
@@ -223,20 +226,20 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
         </div>
 
         {/* Auto Refresh Toggle */}
-        <div className="flex items-center gap-3 text-xs text-[#9AA8B8] self-end md:self-auto font-mono">
+        <div className="flex items-center gap-3 text-xs text-[#77766B] self-end md:self-auto font-mono">
           <button
             onClick={() => fetchMonitors()}
             title="Refresh now"
-            className="p-1.5 rounded-lg bg-[#0E131A] border border-[#263241] text-[#9AA8B8] hover:text-[#E8EDF4] hover:bg-[#192330] transition-colors"
+            className="p-1.5 rounded-sm bg-[#FAF8F2] border border-[#D4CCBE] text-[#77766B] hover:text-[#252720] hover:bg-[#E8E1D5] transition-colors cursor-pointer"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-[#3DD6C6]' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-[#D84A2F]' : ''}`} />
           </button>
           <label className="flex items-center gap-2 cursor-pointer text-xs">
             <input
               type="checkbox"
               checked={autoRefresh}
               onChange={e => setAutoRefresh(e.target.checked)}
-              className="rounded bg-[#0E131A] border-[#263241] text-[#3DD6C6] focus:ring-0 w-3.5 h-3.5 cursor-pointer"
+              className="rounded-sm bg-[#FAF8F2] border-[#D4CCBE] text-[#D84A2F] focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-[#D84A2F]"
             />
             <span>Auto-poll (15s)</span>
           </label>
@@ -245,26 +248,26 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
 
       {/* Monitor List View */}
       {loading && monitors.length === 0 ? (
-        <div className="py-24 text-center text-[#9AA8B8] text-xs">
-          <Activity className="w-6 h-6 mx-auto mb-3 text-[#3DD6C6] animate-pulse" />
+        <div className="py-24 text-center text-[#77766B] text-xs font-mono">
+          <Activity className="w-6 h-6 mx-auto mb-3 text-[#D84A2F] animate-pulse" />
           Synchronizing telemetry metrics...
         </div>
       ) : monitors.length === 0 ? (
-        <div className="py-16 text-center bg-[#131A23]/60 border border-dashed border-[#263241] rounded-xl p-8">
-          <Layers className="w-10 h-10 mx-auto mb-3 text-[#687789]" />
-          <h3 className="text-sm font-semibold text-[#E8EDF4]">
+        <div className="py-16 text-center bg-[#FAF8F2] border border-dashed border-[#D4CCBE] rounded-sm p-8">
+          <Layers className="w-10 h-10 mx-auto mb-3 text-[#77766B]" />
+          <h3 className="text-base font-serif font-normal text-[#252720]">
             {search || statusFilter ? 'No matching monitors found' : 'No monitors configured yet'}
           </h3>
-          <p className="text-xs text-[#9AA8B8] max-w-md mx-auto mt-1 mb-5">
+          <p className="text-xs text-[#77766B] max-w-md mx-auto mt-1 mb-5">
             {search || statusFilter
-              ? 'Try adjusting your search criteria or resetting the status filter.'
-              : 'Add your first synthetic endpoint to begin tracking latency, SLA uptimes, and automated incident recovery.'}
+              ? 'Try adjusting your search query or resetting the filter options.'
+              : 'Add your first synthetic endpoint to begin tracking latency, availability SLAs, and automated incident recovery.'}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             <button
               onClick={() => setIsCreateOpen(true)}
-              className="px-4 py-2 text-xs font-semibold rounded-lg bg-[#3DD6C6] hover:bg-[#59E2D2] text-[#0B0F14] transition-colors inline-flex items-center gap-2 shadow-sm"
+              className="px-4 py-2 text-xs font-medium rounded-sm bg-[#D84A2F] hover:bg-[#D84A2F]/90 text-white transition-colors inline-flex items-center gap-2 shadow-sm cursor-pointer"
             >
               <Plus className="w-4 h-4" /> Add Your First Monitor
             </button>
@@ -273,20 +276,20 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
               <button
                 onClick={handleSeedDemo}
                 disabled={seeding}
-                className="px-3.5 py-2 text-xs font-medium rounded-lg bg-[#192330] hover:bg-[#202B39] text-[#9AA8B8] hover:text-[#E8EDF4] border border-[#263241] transition-colors inline-flex items-center gap-2"
+                className="px-3.5 py-2 text-xs font-mono rounded-sm bg-[#FAF8F2] hover:bg-[#E8E1D5] text-[#77766B] hover:text-[#252720] border border-[#D4CCBE] transition-colors inline-flex items-center gap-2 cursor-pointer"
                 title="Initialize with sample public API endpoints"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#3DD6C6]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#D84A2F]" />
                 {seeding ? 'Initializing...' : 'Load Starter Endpoints'}
               </button>
             )}
           </div>
         </div>
       ) : (
-        <div className="bg-[#131A23] border border-[#263241] rounded-xl overflow-hidden shadow-sm">
+        <div className="bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm overflow-hidden shadow-sm">
           {/* Table Header (Desktop) */}
-          <div className="hidden md:grid grid-cols-12 gap-4 px-5 py-2.5 bg-[#0E131A] border-b border-[#1D2733] text-[11px] font-medium text-[#687789] uppercase tracking-wider">
-            <div className="col-span-5">Service / Target URL</div>
+          <div className="hidden md:grid grid-cols-12 gap-4 px-5 py-2.5 bg-[#E8E1D5]/60 border-b border-[#D4CCBE] text-[10px] font-mono text-[#77766B] uppercase tracking-wider">
+            <div className="col-span-5">Service / Target Endpoint</div>
             <div className="col-span-2">Health Status</div>
             <div className="col-span-2">24h Uptime</div>
             <div className="col-span-2">Last Latency</div>
@@ -294,24 +297,24 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
           </div>
 
           {/* Table Rows */}
-          <div className="divide-y divide-[#1D2733]">
+          <div className="divide-y divide-[#D4CCBE]">
             {monitors.map(m => (
               <div
                 key={m._id}
                 onClick={() => onSelectMonitor(m._id)}
-                className="group px-5 py-3.5 hover:bg-[#192330]/60 transition-colors cursor-pointer flex flex-col md:grid md:grid-cols-12 md:gap-4 md:items-center gap-2.5"
+                className="group px-5 py-3 hover:bg-[#E8E1D5]/40 transition-colors cursor-pointer flex flex-col md:grid md:grid-cols-12 md:gap-4 md:items-center gap-2"
               >
                 {/* Col 1-5: Service Name, Method & URL */}
                 <div className="col-span-5 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[#0E131A] text-[#9AA8B8] border border-[#263241] shrink-0">
+                    <span className="font-mono text-[10px] font-semibold px-1.5 py-0.5 rounded-sm bg-[#E8E1D5] text-[#252720] border border-[#D4CCBE] shrink-0">
                       {m.method || 'GET'}
                     </span>
-                    <h3 className="text-sm font-semibold text-[#E8EDF4] group-hover:text-[#3DD6C6] transition-colors truncate">
+                    <h3 className="text-sm font-medium text-[#252720] group-hover:text-[#D84A2F] transition-colors truncate">
                       {m.name}
                     </h3>
                   </div>
-                  <p className="text-xs font-mono text-[#687789] truncate mt-0.5" title={m.url}>
+                  <p className="text-xs font-mono text-[#77766B] truncate mt-0.5" title={m.url}>
                     {m.url}
                   </p>
                 </div>
@@ -323,30 +326,30 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
 
                 {/* Col 8-9: 24h Uptime */}
                 <div className="col-span-2 text-xs">
-                  <span className="md:hidden text-[10px] text-[#687789] uppercase mr-2 font-mono">24h Uptime:</span>
-                  <span className="font-mono tabular-nums font-medium text-xs">
+                  <span className="md:hidden text-[10px] text-[#77766B] uppercase mr-2 font-mono">24h Uptime:</span>
+                  <span className="font-mono tabular-nums font-semibold text-xs">
                     {m.uptime24h !== null && m.uptime24h !== undefined ? (
-                      <span className={m.uptime24h >= 99 ? 'text-[#45D483]' : 'text-[#F2B866]'}>
+                      <span className={m.uptime24h >= 99 ? 'text-[#427A55]' : 'text-[#C17B27]'}>
                         {m.uptime24h}%
                       </span>
                     ) : (
-                      <span className="text-[#687789] font-sans">No data</span>
+                      <span className="text-[#77766B] font-sans font-normal">No data</span>
                     )}
                   </span>
                 </div>
 
                 {/* Col 10-11: Latency & Check time */}
                 <div className="col-span-2 text-xs">
-                  <div className="flex items-center gap-1.5 font-mono tabular-nums font-medium">
-                    <span className="md:hidden text-[10px] text-[#687789] uppercase mr-2 font-mono">Latency:</span>
+                  <div className="flex items-center gap-1.5 font-mono tabular-nums font-semibold">
+                    <span className="md:hidden text-[10px] text-[#77766B] uppercase mr-2 font-mono">Latency:</span>
                     {m.lastLatencyMs !== null && m.lastLatencyMs !== undefined ? (
-                      <span className="text-[#3DD6C6]">{m.lastLatencyMs} ms</span>
+                      <span className="text-[#252720]">{m.lastLatencyMs} ms</span>
                     ) : (
-                      <span className="text-[#687789] font-sans">Pending</span>
+                      <span className="text-[#77766B] font-sans font-normal">Pending</span>
                     )}
                   </div>
-                  <span className="text-[10px] font-mono text-[#687789] flex items-center gap-1 mt-0.5">
-                    <Clock className="w-3 h-3 text-[#687789]" />
+                  <span className="text-[10px] font-mono text-[#77766B] flex items-center gap-1 mt-0.5">
+                    <Clock className="w-3 h-3 text-[#77766B]" />
                     {m.lastCheckedAt ? new Date(m.lastCheckedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Never'}
                   </span>
                 </div>
@@ -356,9 +359,9 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
                   <button
                     onClick={e => handleTogglePause(e, m._id)}
                     title={m.isPaused ? 'Resume monitor' : 'Pause monitor'}
-                    className="p-1.5 rounded-lg text-[#9AA8B8] hover:text-[#E8EDF4] hover:bg-[#202B39] transition-colors"
+                    className="p-1.5 rounded-sm text-[#77766B] hover:text-[#252720] hover:bg-[#E8E1D5] transition-colors cursor-pointer"
                   >
-                    {m.isPaused ? <Play className="w-3.5 h-3.5 fill-current text-[#45D483]" /> : <Pause className="w-3.5 h-3.5" />}
+                    {m.isPaused ? <Play className="w-3.5 h-3.5 fill-current text-[#427A55]" /> : <Pause className="w-3.5 h-3.5" />}
                   </button>
 
                   <button
@@ -367,7 +370,7 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
                       setEditingMonitor(m);
                     }}
                     title="Edit monitor"
-                    className="p-1.5 rounded-lg text-[#9AA8B8] hover:text-[#E8EDF4] hover:bg-[#202B39] transition-colors"
+                    className="p-1.5 rounded-sm text-[#77766B] hover:text-[#252720] hover:bg-[#E8E1D5] transition-colors cursor-pointer"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
@@ -378,7 +381,7 @@ export default function Dashboard({ onSelectMonitor, onViewIncidents, onOpenGuid
                       setDeletingMonitor(m);
                     }}
                     title="Delete monitor"
-                    className="p-1.5 rounded-lg text-[#9AA8B8] hover:text-[#FF647C] hover:bg-[#202B39] transition-colors"
+                    className="p-1.5 rounded-sm text-[#77766B] hover:text-[#C63E32] hover:bg-[#E8E1D5] transition-colors cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>

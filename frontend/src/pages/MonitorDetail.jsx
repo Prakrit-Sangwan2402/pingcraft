@@ -101,8 +101,8 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
 
   if (loading) {
     return (
-      <div className="py-24 text-center text-[#9AA8B8] text-xs">
-        <Activity className="w-6 h-6 mx-auto mb-2 text-[#3DD6C6] animate-pulse" />
+      <div className="py-24 text-center text-[#77766B] text-xs font-mono">
+        <Activity className="w-6 h-6 mx-auto mb-2 text-[#D84A2F] animate-pulse" />
         Loading telemetry and performance metrics...
       </div>
     );
@@ -110,11 +110,11 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
 
   if (error || !data) {
     return (
-      <div className="py-16 text-center">
-        <div className="text-[#FF647C] mb-2 text-xs">Error loading monitor: {error}</div>
+      <div className="py-16 text-center font-sans">
+        <div className="text-[#C63E32] mb-2 text-xs font-mono">Error loading monitor: {error}</div>
         <button
           onClick={onBack}
-          className="px-3.5 py-1.5 bg-[#192330] border border-[#263241] text-[#E8EDF4] rounded-lg text-xs hover:bg-[#202B39]"
+          className="px-3.5 py-1.5 bg-[#FAF8F2] border border-[#D4CCBE] text-[#252720] rounded-sm text-xs hover:bg-[#E8E1D5] cursor-pointer"
         >
           Return to Dashboard
         </button>
@@ -127,21 +127,22 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
   const m7d = metrics?.metrics7d;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-sans">
       {/* Navigation & Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-[#1D2733]">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 pb-4 border-b border-[#D4CCBE]">
+        <div className="flex items-start gap-3">
           <button
             onClick={onBack}
-            className="p-2 rounded-lg bg-[#131A23] border border-[#263241] text-[#9AA8B8] hover:text-[#E8EDF4] hover:bg-[#192330] transition-colors"
+            className="p-1.5 rounded-sm bg-[#FAF8F2] border border-[#D4CCBE] text-[#77766B] hover:text-[#252720] hover:bg-[#E8E1D5] transition-colors mt-1 cursor-pointer"
+            aria-label="Back to dashboard"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-semibold text-[#E8EDF4] tracking-tight">{monitor.name}</h1>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-2xl md:text-3xl font-serif font-normal text-[#252720] tracking-tight">{monitor.name}</h1>
               <StatusBadge status={monitor.status} size="sm" />
-              <span className="font-mono text-[10px] font-semibold px-2 py-0.5 rounded bg-[#0E131A] text-[#9AA8B8] border border-[#263241]">
+              <span className="font-mono text-[10px] font-semibold px-2 py-0.5 rounded-sm bg-[#E8E1D5] text-[#252720] border border-[#D4CCBE]">
                 {monitor.method}
               </span>
             </div>
@@ -149,10 +150,10 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
               href={monitor.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-mono text-[#8BB8FF] hover:underline flex items-center gap-1 mt-0.5"
+              className="text-xs font-mono text-[#D84A2F] hover:underline flex items-center gap-1 mt-1"
             >
               {monitor.url}
-              <ExternalLink className="w-3 h-3 text-[#687789]" />
+              <ExternalLink className="w-3 h-3 text-[#77766B]" />
             </a>
           </div>
         </div>
@@ -161,37 +162,39 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsInstantProbeOpen(true)}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[#131A23] hover:bg-[#192330] text-[#E8EDF4] border border-[#263241] transition-colors flex items-center gap-1.5"
+            className="px-3 py-1.5 text-xs font-mono rounded-sm bg-[#292B24] hover:bg-[#3D4036] text-[#FAF8F2] transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
           >
-            <Zap className="w-3.5 h-3.5 text-[#3DD6C6]" />
+            <Zap className="w-3.5 h-3.5 text-[#D84A2F]" />
             Instant Probe
           </button>
 
           <button
             onClick={handleTogglePause}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[#131A23] hover:bg-[#192330] text-[#E8EDF4] border border-[#263241] transition-colors flex items-center gap-1.5"
+            className="px-3 py-1.5 text-xs font-mono rounded-sm bg-[#FAF8F2] hover:bg-[#E8E1D5] text-[#252720] border border-[#D4CCBE] transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
           >
             {monitor.isPaused ? (
               <>
-                <Play className="w-3.5 h-3.5 fill-current text-[#45D483]" /> Resume
+                <Play className="w-3.5 h-3.5 fill-current text-[#427A55]" /> Resume
               </>
             ) : (
               <>
-                <Pause className="w-3.5 h-3.5 text-[#9AA8B8]" /> Pause
+                <Pause className="w-3.5 h-3.5 text-[#77766B]" /> Pause
               </>
             )}
           </button>
 
           <button
             onClick={() => setIsEditOpen(true)}
-            className="p-2 rounded-lg bg-[#131A23] hover:bg-[#192330] text-[#9AA8B8] hover:text-[#E8EDF4] border border-[#263241] transition-colors"
+            className="p-1.5 rounded-sm bg-[#FAF8F2] hover:bg-[#E8E1D5] text-[#77766B] hover:text-[#252720] border border-[#D4CCBE] transition-colors cursor-pointer"
+            aria-label="Edit monitor"
           >
             <Edit2 className="w-3.5 h-3.5" />
           </button>
 
           <button
             onClick={() => setIsDeleteOpen(true)}
-            className="p-2 rounded-lg bg-[#131A23] hover:bg-[#192330] text-[#9AA8B8] hover:text-[#FF647C] border border-[#263241] transition-colors"
+            className="p-1.5 rounded-sm bg-[#FAF8F2] hover:bg-[#E8E1D5] text-[#77766B] hover:text-[#C63E32] border border-[#D4CCBE] transition-colors cursor-pointer"
+            aria-label="Delete monitor"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
@@ -200,19 +203,19 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
 
       {/* Active Incident Alert Banner */}
       {activeIncident && (
-        <div className="bg-[#FF647C]/10 border border-[#FF647C]/25 rounded-xl p-3.5 flex items-center justify-between gap-4">
+        <div className="bg-[#C63E32]/10 border border-[#C63E32]/30 rounded-sm p-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-[#FF647C]/10 border border-[#FF647C]/25 flex items-center justify-center text-[#FF647C] shrink-0">
+            <div className="h-8 w-8 rounded-sm bg-[#C63E32]/20 border border-[#C63E32]/40 flex items-center justify-center text-[#C63E32] shrink-0">
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-[#FF647C] uppercase tracking-wide">Active Outage Incident</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#0E131A] border border-[#FF647C]/30 text-[#FF647C]">
+                <span className="text-xs font-mono font-semibold text-[#C63E32] uppercase tracking-wide">Active Outage Incident</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-[#FAF8F2] border border-[#C63E32]/40 text-[#C63E32]">
                   {activeIncident.status}
                 </span>
               </div>
-              <p className="text-xs text-[#E8EDF4] mt-0.5">
+              <p className="text-xs text-[#252720] mt-0.5">
                 {activeIncident.triggerReason}
               </p>
             </div>
@@ -220,7 +223,7 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
 
           <button
             onClick={() => onViewIncident(activeIncident._id)}
-            className="px-3 py-1.5 rounded-lg bg-[#FF647C] hover:bg-[#FF647C]/90 text-white text-xs font-semibold whitespace-nowrap shadow-sm transition-colors"
+            className="px-3 py-1.5 rounded-sm bg-[#C63E32] hover:bg-[#C63E32]/90 text-white text-xs font-mono whitespace-nowrap shadow-sm transition-colors cursor-pointer"
           >
             War Room &rarr;
           </button>
@@ -263,75 +266,76 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
       <LatencyChart data={metrics?.chartData || []} height={260} />
 
       {/* Ping Telemetry Table */}
-      <div className="bg-[#131A23] border border-[#263241] rounded-xl p-4 shadow-sm">
-        <div className="flex items-center justify-between mb-3">
+      <div className="bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm p-4 shadow-sm">
+        <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#D4CCBE]">
           <div>
-            <h3 className="text-xs font-semibold text-[#E8EDF4] uppercase tracking-wide">Historical Ping Probes</h3>
-            <p className="text-[11px] text-[#687789]">
-              UTC logs with precision latency measurements and failure classifications.
+            <h3 className="text-xs font-mono font-medium text-[#252720] uppercase tracking-wider">Historical Ping Probes</h3>
+            <p className="text-[11px] text-[#77766B]">
+              UTC audit logs with monotonic latency measurements and failure classifications.
             </p>
           </div>
           <button
             onClick={() => fetchLogs(page)}
-            className="p-1.5 rounded-lg bg-[#0E131A] border border-[#263241] text-[#9AA8B8] hover:text-[#E8EDF4] transition-colors"
+            className="p-1.5 rounded-sm bg-[#FAF8F2] border border-[#D4CCBE] text-[#77766B] hover:text-[#252720] hover:bg-[#E8E1D5] transition-colors cursor-pointer"
+            aria-label="Refresh logs"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${logsLoading ? 'animate-spin text-[#3DD6C6]' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${logsLoading ? 'animate-spin text-[#D84A2F]' : ''}`} />
           </button>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#0E131A] text-[#687789] font-medium border-b border-[#1D2733] uppercase text-[11px] tracking-wider">
+            <thead className="bg-[#E8E1D5]/60 text-[#77766B] font-mono border-b border-[#D4CCBE] uppercase text-[10px] tracking-wider">
               <tr>
-                <th className="py-2.5 px-3">Result</th>
-                <th className="py-2.5 px-3">Status</th>
-                <th className="py-2.5 px-3">Latency</th>
-                <th className="py-2.5 px-3">Category / Details</th>
-                <th className="py-2.5 px-3">UTC Timestamp</th>
+                <th className="py-2 px-3">Result</th>
+                <th className="py-2 px-3">Status</th>
+                <th className="py-2 px-3">Latency</th>
+                <th className="py-2 px-3">Category / Details</th>
+                <th className="py-2 px-3">UTC Timestamp</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1D2733] font-mono text-[11px]">
+            <tbody className="divide-y divide-[#D4CCBE] font-mono text-[11px]">
               {logs.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="py-8 text-center text-[#687789] font-sans">
+                  <td colSpan="5" className="py-8 text-center text-[#77766B] font-sans">
                     No ping logs persisted yet. Probes run automatically every {monitor.intervalSeconds}s.
                   </td>
                 </tr>
               ) : (
                 logs.map(log => (
-                  <tr key={log._id} className="hover:bg-[#192330]/50 transition-colors">
-                    <td className="py-2.5 px-3">
+                  <tr key={log._id} className="hover:bg-[#E8E1D5]/30 transition-colors">
+                    <td className="py-2 px-3">
                       {log.success ? (
-                        <span className="text-[#45D483] font-sans font-medium flex items-center gap-1.5">
+                        <span className="text-[#427A55] font-mono font-medium flex items-center gap-1.5">
                           <CheckCircle2 className="w-3 h-3" /> PASS
                         </span>
                       ) : (
-                        <span className="text-[#FF647C] font-sans font-medium flex items-center gap-1.5">
+                        <span className="text-[#C63E32] font-mono font-medium flex items-center gap-1.5">
                           <AlertTriangle className="w-3 h-3" /> FAIL
                         </span>
                       )}
                     </td>
-                    <td className="py-2.5 px-3 font-semibold text-[#E8EDF4]">
+                    <td className="py-2 px-3 font-semibold text-[#252720]">
                       {log.statusCode ? `HTTP ${log.statusCode}` : 'ERR'}
                     </td>
-                    <td className="py-2.5 px-3 text-[#E8EDF4] tabular-nums">
+                    <td className="py-2 px-3 text-[#252720] tabular-nums font-semibold">
                       {log.latencyMs} ms
                     </td>
-                    <td className="py-2.5 px-3 text-[#9AA8B8] font-sans max-w-xs truncate">
+                    <td className="py-2 px-3 text-[#77766B] font-sans max-w-xs truncate">
                       {log.errorCategory !== 'NONE' ? (
-                        <span className="text-[#FF647C] font-mono text-[10px] bg-[#FF647C]/10 px-1.5 py-0.5 rounded border border-[#FF647C]/25">
+                        <span className="text-[#C63E32] font-mono text-[10px] bg-[#C63E32]/10 px-1.5 py-0.5 rounded-sm border border-[#C63E32]/30">
                           {log.errorCategory}
                         </span>
                       ) : (
-                        <span className="text-[#687789]">—</span>
+                        <span className="text-[#77766B]">—</span>
                       )}
                       {log.errorMessage && (
-                        <span className="text-[#687789] block text-[10px] truncate mt-0.5">
+                        <span className="text-[#77766B] block text-[10px] truncate mt-0.5 font-mono">
                           {log.errorMessage}
                         </span>
                       )}
                     </td>
-                    <td className="py-2.5 px-3 text-[#687789]">
+                    <td className="py-2 px-3 text-[#77766B]">
                       {new Date(log.timestamp || log.createdAt).toISOString().replace('T', ' ').slice(0, 19)}
                     </td>
                   </tr>
@@ -343,20 +347,20 @@ export default function MonitorDetail({ monitorId, onBack, onViewIncident }) {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between pt-3 mt-2 border-t border-[#1D2733] text-[11px] text-[#687789]">
+          <div className="flex items-center justify-between pt-3 mt-2 border-t border-[#D4CCBE] text-[11px] font-mono text-[#77766B]">
             <span>Page {page} of {totalPages}</span>
             <div className="flex items-center gap-1.5">
               <button
                 disabled={page <= 1}
                 onClick={() => fetchLogs(page - 1)}
-                className="p-1.5 rounded-lg bg-[#0E131A] border border-[#263241] text-[#9AA8B8] hover:text-[#E8EDF4] disabled:opacity-40 transition-colors"
+                className="p-1.5 rounded-sm bg-[#FAF8F2] border border-[#D4CCBE] text-[#77766B] hover:text-[#252720] disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => fetchLogs(page + 1)}
-                className="p-1.5 rounded-lg bg-[#0E131A] border border-[#263241] text-[#9AA8B8] hover:text-[#E8EDF4] disabled:opacity-40 transition-colors"
+                className="p-1.5 rounded-sm bg-[#FAF8F2] border border-[#D4CCBE] text-[#77766B] hover:text-[#252720] disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>

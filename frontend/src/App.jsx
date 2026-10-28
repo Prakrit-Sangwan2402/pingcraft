@@ -57,9 +57,9 @@ export default function App() {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0B0F14] flex flex-col items-center justify-center">
-        <Activity className="w-7 h-7 text-[#3DD6C6] animate-pulse mb-3" />
-        <span className="text-[#9AA8B8] text-xs font-mono tracking-wider uppercase">Initializing PingCraft...</span>
+      <div className="min-h-screen bg-[#F3EFE6] flex flex-col items-center justify-center">
+        <Activity className="w-7 h-7 text-[#D84A2F] animate-pulse mb-3" />
+        <span className="text-[#77766B] text-xs font-mono tracking-wider uppercase">Calibrating instrument...</span>
       </div>
     );
   }
@@ -88,7 +88,7 @@ export default function App() {
 
   // 3. Authenticated App Layout
   return (
-    <div className="min-h-screen bg-[#0B0F14] text-[#E8EDF4] flex flex-col antialiased selection:bg-[#3DD6C6]/20 selection:text-[#3DD6C6]">
+    <div className="min-h-screen bg-[#F3EFE6] text-[#252720] flex flex-col antialiased selection:bg-[#D84A2F]/20 selection:text-[#D84A2F]">
       <Navbar
         activeTab={activeTab === 'monitor-detail' ? 'monitors' : activeTab}
         onTabChange={(tab) => {
@@ -99,7 +99,7 @@ export default function App() {
         onOpenGuide={() => setIsGuideOpen(true)}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-7">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'monitors' && (
           <Dashboard
             onSelectMonitor={(id) => {
@@ -146,8 +146,8 @@ export default function App() {
         )}
       </main>
 
-      <footer className="border-t border-[#1D2733] bg-[#0E131A] py-3.5 text-center text-[11px] text-[#687789] font-mono">
-        PingCraft Infrastructure Observability & Synthetic Health Platform
+      <footer className="border-t border-[#D4CCBE] bg-[#FAF8F2] py-4 text-center text-[11px] text-[#77766B] font-mono tracking-tight">
+        <span className="font-semibold text-[#252720]">PingCraft</span> &mdash; Industrial Health Monitoring &amp; Outage Diagnostic System
       </footer>
 
       <UserGuideModal

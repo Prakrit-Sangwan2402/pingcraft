@@ -110,27 +110,31 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
-      <div className="bg-[#131A23] border border-[#263241] rounded-xl w-full max-w-xl p-6 shadow-2xl relative my-8 text-[#E8EDF4]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#252720]/60 backdrop-blur-[2px] animate-fade-in overflow-y-auto font-sans">
+      <div className="bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm w-full max-w-xl p-6 shadow-xl relative my-8 text-[#252720]">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-[#9AA8B8] hover:text-[#E8EDF4]"
+          className="absolute top-4 right-4 text-[#77766B] hover:text-[#252720] transition-colors"
+          aria-label="Close modal"
         >
           <X className="w-4 h-4" />
         </button>
 
-        <div className="mb-4 pb-3 border-b border-[#1D2733]">
-          <h3 className="text-base font-semibold text-[#E8EDF4]">
-            {isEdit ? 'Edit Monitor Configuration' : 'Create Synthetic Monitor'}
+        <div className="mb-4 pb-3 border-b border-[#D4CCBE]">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-[#D84A2F] block mb-1">
+            Telemetry Target Specification
+          </span>
+          <h3 className="text-xl font-serif font-normal text-[#252720]">
+            {isEdit ? 'Edit monitor configuration' : 'Create synthetic monitor'}
           </h3>
-          <p className="text-xs text-[#9AA8B8] mt-0.5">
-            Configure URL, check frequency, and consecutive failure SLA triggers.
+          <p className="text-xs text-[#77766B] mt-1">
+            Configure URL, probe cadence, and consecutive failure SLA triggers.
           </p>
         </div>
 
         {error && (
-          <div className="mb-4 p-2.5 rounded-lg bg-[#FF647C]/10 border border-[#FF647C]/20 text-[#FF647C] text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 text-[#FF647C] shrink-0" />
+          <div className="mb-4 p-2.5 rounded-sm bg-[#C63E32]/10 border border-[#C63E32]/30 text-[#C63E32] text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-[#C63E32] shrink-0" />
             <span>{error}</span>
           </div>
         )}
@@ -138,8 +142,8 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-[#9AA8B8] mb-1">
-                Monitor Name <span className="text-[#FF647C]">*</span>
+              <label className="block text-[10px] font-mono uppercase tracking-wider text-[#77766B] mb-1">
+                Monitor name <span className="text-[#C63E32]">*</span>
               </label>
               <input
                 type="text"
@@ -147,18 +151,18 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
                 placeholder="e.g. Authentication Service"
-                className="w-full bg-[#0E131A] border border-[#263241] rounded-lg px-3 py-1.5 text-xs text-[#E8EDF4] focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
+                className="w-full bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-3 py-1.5 text-xs text-[#252720] focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-[#9AA8B8] mb-1">
-                HTTP Method
+              <label className="block text-[10px] font-mono uppercase tracking-wider text-[#77766B] mb-1">
+                HTTP method
               </label>
               <select
                 value={formData.method}
                 onChange={e => setFormData({ ...formData, method: e.target.value })}
-                className="w-full bg-[#0E131A] border border-[#263241] rounded-lg px-3 py-1.5 text-xs text-[#E8EDF4] focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6] font-mono"
+                className="w-full bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-3 py-1.5 text-xs text-[#252720] focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F] font-mono"
               >
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
@@ -171,11 +175,11 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-medium text-[#9AA8B8]">
-                Target Endpoint URL <span className="text-[#FF647C]">*</span>
+              <label className="text-[10px] font-mono uppercase tracking-wider text-[#77766B]">
+                Target endpoint URL <span className="text-[#C63E32]">*</span>
               </label>
-              <span className="text-[10px] text-[#687789] font-mono flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-[#3DD6C6]" /> SSRF Protected
+              <span className="text-[10px] text-[#427A55] font-mono flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-[#427A55]" /> SSRF Protected
               </span>
             </div>
             <input
@@ -184,29 +188,29 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
               value={formData.url}
               onChange={e => setFormData({ ...formData, url: e.target.value })}
               placeholder="https://api.yourdomain.com/health"
-              className="w-full bg-[#0E131A] border border-[#263241] rounded-lg px-3 py-1.5 text-xs text-[#E8EDF4] font-mono focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
+              className="w-full bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-3 py-1.5 text-xs text-[#252720] font-mono focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F]"
             />
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
             <div>
-              <label className="block text-[11px] font-medium text-[#9AA8B8] mb-1">Expected Status</label>
+              <label className="block text-[10px] font-mono uppercase tracking-wider text-[#77766B] mb-1">Expected status</label>
               <input
                 type="number"
                 min="100"
                 max="599"
                 value={formData.expectedStatusCode}
                 onChange={e => setFormData({ ...formData, expectedStatusCode: Number(e.target.value) })}
-                className="w-full bg-[#0E131A] border border-[#263241] rounded-lg px-2.5 py-1.5 text-xs text-[#E8EDF4] font-mono focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
+                className="w-full bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-2.5 py-1.5 text-xs text-[#252720] font-mono focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F]"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-medium text-[#9AA8B8] mb-1">Check Frequency</label>
+              <label className="block text-[10px] font-mono uppercase tracking-wider text-[#77766B] mb-1">Check frequency</label>
               <select
                 value={formData.intervalSeconds}
                 onChange={e => setFormData({ ...formData, intervalSeconds: Number(e.target.value) })}
-                className="w-full bg-[#0E131A] border border-[#263241] rounded-lg px-2 py-1.5 text-xs text-[#E8EDF4] focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6] font-mono"
+                className="w-full bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-2 py-1.5 text-xs text-[#252720] focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F] font-mono"
               >
                 <option value={15}>Every 15s</option>
                 <option value={30}>Every 30s</option>
@@ -216,7 +220,7 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
             </div>
 
             <div>
-              <label className="block text-[11px] font-medium text-[#9AA8B8] mb-1">Timeout (ms)</label>
+              <label className="block text-[10px] font-mono uppercase tracking-wider text-[#77766B] mb-1">Timeout (ms)</label>
               <input
                 type="number"
                 min="1000"
@@ -224,12 +228,12 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
                 step="1000"
                 value={formData.timeoutMs}
                 onChange={e => setFormData({ ...formData, timeoutMs: Number(e.target.value) })}
-                className="w-full bg-[#0E131A] border border-[#263241] rounded-lg px-2.5 py-1.5 text-xs text-[#E8EDF4] font-mono focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
+                className="w-full bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-2.5 py-1.5 text-xs text-[#252720] font-mono focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F]"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-medium text-[#9AA8B8] mb-1">Failure SLA</label>
+              <label className="block text-[10px] font-mono uppercase tracking-wider text-[#77766B] mb-1">Failure SLA</label>
               <input
                 type="number"
                 min="1"
@@ -237,7 +241,7 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
                 value={formData.failureThreshold}
                 onChange={e => setFormData({ ...formData, failureThreshold: Number(e.target.value) })}
                 title="Consecutive probe failures before incident triggers"
-                className="w-full bg-[#0E131A] border border-[#263241] rounded-lg px-2.5 py-1.5 text-xs text-[#E8EDF4] font-mono focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
+                className="w-full bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-2.5 py-1.5 text-xs text-[#252720] font-mono focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F]"
               />
             </div>
           </div>
@@ -245,35 +249,36 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
           {/* Custom Headers */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[11px] font-medium text-[#9AA8B8]">Custom Request Headers</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#77766B]">Custom request headers</span>
               <button
                 type="button"
                 onClick={addHeaderRow}
-                className="text-xs text-[#3DD6C6] hover:text-[#59E2D2] flex items-center gap-1 font-medium"
+                className="text-xs text-[#D84A2F] hover:text-[#D84A2F]/80 flex items-center gap-1 font-medium cursor-pointer"
               >
-                <Plus className="w-3 h-3" /> Add Header
+                <Plus className="w-3 h-3" /> Add header
               </button>
             </div>
             {headersList.map((hdr, idx) => (
               <div key={idx} className="flex gap-2 mb-1.5 items-center">
                 <input
                   type="text"
-                  placeholder="Name (e.g. X-Api-Key)"
+                  placeholder="Header Name (e.g. X-Api-Key)"
                   value={hdr.key}
                   onChange={e => updateHeaderRow(idx, 'key', e.target.value)}
-                  className="flex-1 bg-[#0E131A] border border-[#263241] rounded-lg px-2.5 py-1 text-xs text-[#E8EDF4] font-mono focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
+                  className="flex-1 bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-2.5 py-1 text-xs text-[#252720] font-mono focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F]"
                 />
                 <input
                   type="text"
                   placeholder="Value"
                   value={hdr.value}
                   onChange={e => updateHeaderRow(idx, 'value', e.target.value)}
-                  className="flex-1 bg-[#0E131A] border border-[#263241] rounded-lg px-2.5 py-1 text-xs text-[#E8EDF4] font-mono focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
+                  className="flex-1 bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm px-2.5 py-1 text-xs text-[#252720] font-mono focus:outline-none focus:border-[#D84A2F] focus:ring-1 focus:ring-[#D84A2F]"
                 />
                 <button
                   type="button"
                   onClick={() => removeHeaderRow(idx)}
-                  className="p-1 text-[#687789] hover:text-[#FF647C]"
+                  className="p-1 text-[#77766B] hover:text-[#C63E32] transition-colors cursor-pointer"
+                  aria-label="Remove header"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -282,34 +287,34 @@ export default function MonitorModal({ isOpen, onClose, onSaved, monitor = null 
           </div>
 
           {/* Public Status Page toggle */}
-          <div className="flex items-center justify-between pt-3 border-t border-[#1D2733]">
+          <div className="flex items-center justify-between pt-3 border-t border-[#D4CCBE]">
             <div>
-              <span className="text-xs font-medium text-[#E8EDF4] block">Public Status Page Visibility</span>
-              <span className="text-[11px] text-[#687789] block mt-0.5">
-                Expose this monitor's health to external visitors on the public status page.
+              <span className="text-xs font-medium text-[#252720] block">Public status page visibility</span>
+              <span className="text-[11px] text-[#77766B] block mt-0.5">
+                Expose this monitor's health to external visitors on the public status bulletin.
               </span>
             </div>
             <input
               type="checkbox"
               checked={formData.isPublic}
               onChange={e => setFormData({ ...formData, isPublic: e.target.checked })}
-              className="rounded bg-[#0E131A] border-[#263241] text-[#3DD6C6] focus:ring-0 w-4 h-4 cursor-pointer"
+              className="rounded-sm bg-[#FAF8F2] border-[#D4CCBE] text-[#D84A2F] focus:ring-0 w-4 h-4 cursor-pointer accent-[#D84A2F]"
             />
           </div>
 
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#1D2733]">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#D4CCBE]">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-3.5 py-1.5 text-xs font-medium text-[#9AA8B8] hover:text-[#E8EDF4] bg-[#192330] hover:bg-[#202B39] border border-[#263241] rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-xs font-medium text-[#77766B] hover:text-[#252720] bg-[#E8E1D5]/60 hover:bg-[#E8E1D5] border border-[#D4CCBE] rounded-sm transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-1.5 text-xs font-semibold text-[#0B0F14] bg-[#3DD6C6] hover:bg-[#59E2D2] rounded-lg shadow-sm transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 text-xs font-medium text-white bg-[#D84A2F] hover:bg-[#D84A2F]/90 rounded-sm shadow-sm transition-colors disabled:opacity-50 cursor-pointer"
             >
               {loading ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Monitor'}
             </button>

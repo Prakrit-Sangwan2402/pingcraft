@@ -5,30 +5,33 @@ export default function UserGuideModal({ isOpen, onClose, onSeedDemo }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
-      <div className="bg-[#131A23] border border-[#263241] rounded-xl w-full max-w-2xl p-6 shadow-2xl relative my-8 text-[#E8EDF4]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#252720]/60 backdrop-blur-[2px] animate-fade-in overflow-y-auto font-sans">
+      <div className="bg-[#FAF8F2] border border-[#D4CCBE] rounded-sm w-full max-w-2xl p-6 shadow-xl relative my-8 text-[#252720]">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-[#9AA8B8] hover:text-[#E8EDF4]"
+          className="absolute top-4 right-4 text-[#77766B] hover:text-[#252720] transition-colors"
+          aria-label="Close modal"
         >
           <X className="w-4 h-4" />
         </button>
 
-        <div className="mb-5 pb-3 border-b border-[#1D2733]">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-[#3DD6C6]">Interactive Walkthrough</span>
-          <h2 className="text-xl font-semibold text-[#E8EDF4] mt-0.5">How to Test & Use PingCraft</h2>
-          <p className="text-xs text-[#9AA8B8] mt-1">
-            Follow this guide to verify all core workflows, background probes, and incident handling.
+        <div className="mb-5 pb-3 border-b border-[#D4CCBE]">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-[#D84A2F] block mb-1">
+            Documentation & Standard Procedures
+          </span>
+          <h2 className="text-2xl font-serif font-normal text-[#252720]">How to test & operate PingCraft</h2>
+          <p className="text-xs text-[#77766B] mt-1">
+            Follow this operational guide to verify core synthetic probes, background schedulers, and incident lifecycles.
           </p>
         </div>
 
         <div className="space-y-4 text-xs">
           {/* Quick Start Option */}
-          <div className="p-3.5 rounded-lg bg-[#0E131A] border border-[#263241] flex items-center justify-between gap-3">
+          <div className="p-3.5 rounded-sm bg-[#E8E1D5]/60 border border-[#D4CCBE] flex items-center justify-between gap-3">
             <div>
-              <span className="font-semibold text-[#E8EDF4] block">Step 0: Load Instant Demo Monitors</span>
-              <span className="text-[#9AA8B8] text-[11px]">
-                Click this button to automatically create 4 real endpoints (GitHub, Cloudflare, HttpBin, and an Outage Target).
+              <span className="font-medium text-[#252720] block">Step 0: Load demonstration monitors</span>
+              <span className="text-[#77766B] text-[11px]">
+                Click this button to automatically provision 4 realistic targets (GitHub, Cloudflare, HttpBin, and an Outage Target).
               </span>
             </div>
             {onSeedDemo && (
@@ -37,7 +40,7 @@ export default function UserGuideModal({ isOpen, onClose, onSeedDemo }) {
                   onSeedDemo();
                   onClose();
                 }}
-                className="px-3.5 py-1.5 rounded-lg bg-[#3DD6C6] hover:bg-[#59E2D2] text-[#0B0F14] font-semibold text-xs whitespace-nowrap transition-colors shadow-sm"
+                className="px-3.5 py-1.5 rounded-sm bg-[#D84A2F] hover:bg-[#D84A2F]/90 text-white font-medium text-xs whitespace-nowrap transition-colors shadow-sm cursor-pointer"
               >
                 Load Demo Monitors
               </button>
@@ -46,85 +49,85 @@ export default function UserGuideModal({ isOpen, onClose, onSeedDemo }) {
 
           {/* Workflow 1 */}
           <div className="flex gap-3">
-            <div className="h-6 w-6 rounded-full bg-[#192330] border border-[#263241] text-[#3DD6C6] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
+            <div className="h-6 w-6 rounded-sm bg-[#292B24] text-[#FAF8F2] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
               1
             </div>
             <div>
-              <h3 className="font-semibold text-[#E8EDF4] text-sm">Background Probes & Telemetry</h3>
-              <p className="text-[#9AA8B8] mt-0.5 leading-relaxed">
+              <h3 className="font-serif font-normal text-[#252720] text-sm">Background probes & telemetry</h3>
+              <p className="text-[#77766B] mt-0.5 leading-relaxed">
                 The Node.js scheduler automatically probes each active monitor according to its interval (e.g. 15s / 30s).
-                Click on any monitor card to see its <b>Response Latency Trend chart</b>, rolling <b>24h Uptime %</b>, <b>p95 Latency</b>, and exact historical ping logs.
+                Click on any monitor entry to view its <b>Response Latency Trend</b>, rolling <b>24h Uptime %</b>, <b>p95 Latency</b>, and exact historical telemetry logs.
               </p>
             </div>
           </div>
 
           {/* Workflow 2 */}
           <div className="flex gap-3">
-            <div className="h-6 w-6 rounded-full bg-[#192330] border border-[#263241] text-[#3DD6C6] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
+            <div className="h-6 w-6 rounded-sm bg-[#292B24] text-[#FAF8F2] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
               2
             </div>
             <div>
-              <h3 className="font-semibold text-[#E8EDF4] text-sm">Testing Outage & Incident State Machine</h3>
-              <p className="text-[#9AA8B8] mt-0.5 leading-relaxed">
+              <h3 className="font-serif font-normal text-[#252720] text-sm">Testing outage & incident state machine</h3>
+              <p className="text-[#77766B] mt-0.5 leading-relaxed">
                 Notice the monitor named <b>"Simulated Outage Endpoint"</b> (configured to target an HTTP 503 error).
-                On the first failure, it turns <span className="text-[#F2B866] font-medium">Degraded</span>.
-                After 2 consecutive failures, it flips to <span className="text-[#FF647C] font-medium">Outage</span> and automatically creates an incident record!
+                On the first failure, it transitions to <span className="text-[#C17B27] font-medium font-mono text-[11px]">DEGRADED</span>.
+                After 2 consecutive failures, it flips to <span className="text-[#C63E32] font-medium font-mono text-[11px]">OUTAGE</span> and automatically opens an incident log.
               </p>
             </div>
           </div>
 
           {/* Workflow 3 */}
           <div className="flex gap-3">
-            <div className="h-6 w-6 rounded-full bg-[#192330] border border-[#263241] text-[#3DD6C6] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
+            <div className="h-6 w-6 rounded-sm bg-[#292B24] text-[#FAF8F2] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
               3
             </div>
             <div>
-              <h3 className="font-semibold text-[#E8EDF4] text-sm">The Incident War Room</h3>
-              <p className="text-[#9AA8B8] mt-0.5 leading-relaxed">
-                Click <b>Incident War Room</b> in the top navigation.
-                You can inspect the incident details, view the immutable audit timeline, and transition the status:
-                <code className="mx-1 px-1.5 py-0.5 rounded bg-[#0E131A] border border-[#263241] font-mono text-[#8BB8FF]">TRIGGERED</code> →
-                <code className="mx-1 px-1.5 py-0.5 rounded bg-[#0E131A] border border-[#263241] font-mono text-[#8BB8FF]">INVESTIGATING</code> →
-                <code className="mx-1 px-1.5 py-0.5 rounded bg-[#0E131A] border border-[#263241] font-mono text-[#8BB8FF]">MITIGATING</code> →
-                <code className="mx-1 px-1.5 py-0.5 rounded bg-[#0E131A] border border-[#263241] font-mono text-[#8BB8FF]">RESOLVED</code>.
+              <h3 className="font-serif font-normal text-[#252720] text-sm">The incident war room</h3>
+              <p className="text-[#77766B] mt-0.5 leading-relaxed">
+                Select <b>Incident War Room</b> in the top navigation.
+                Inspect incident telemetry, view the immutable audit timeline, and transition the status:
+                <code className="mx-1 px-1.5 py-0.5 rounded-sm bg-[#E8E1D5] border border-[#D4CCBE] font-mono text-[#D84A2F]">TRIGGERED</code> →
+                <code className="mx-1 px-1.5 py-0.5 rounded-sm bg-[#E8E1D5] border border-[#D4CCBE] font-mono text-[#D84A2F]">INVESTIGATING</code> →
+                <code className="mx-1 px-1.5 py-0.5 rounded-sm bg-[#E8E1D5] border border-[#D4CCBE] font-mono text-[#D84A2F]">MITIGATING</code> →
+                <code className="mx-1 px-1.5 py-0.5 rounded-sm bg-[#E8E1D5] border border-[#D4CCBE] font-mono text-[#427A55]">RESOLVED</code>.
               </p>
             </div>
           </div>
 
           {/* Workflow 4 */}
           <div className="flex gap-3">
-            <div className="h-6 w-6 rounded-full bg-[#192330] border border-[#263241] text-[#3DD6C6] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
+            <div className="h-6 w-6 rounded-sm bg-[#292B24] text-[#FAF8F2] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
               4
             </div>
             <div>
-              <h3 className="font-semibold text-[#E8EDF4] text-sm">Testing SSRF Defense Shield</h3>
-              <p className="text-[#9AA8B8] mt-0.5 leading-relaxed">
-                Click <b>Instant Probe</b> on the dashboard. Try entering <code className="px-1.5 py-0.5 bg-[#0E131A] border border-[#263241] font-mono text-[#8BB8FF]">http://localhost:5000/api/health</code> or <code className="px-1.5 py-0.5 bg-[#0E131A] border border-[#263241] font-mono text-[#8BB8FF]">http://192.168.1.1</code>.
-                The security engine detects and rejects the loopback/private IP before any connection is initiated!
+              <h3 className="font-serif font-normal text-[#252720] text-sm">SSRF defense validation</h3>
+              <p className="text-[#77766B] mt-0.5 leading-relaxed">
+                Click <b>Instant Probe</b> on the registry dashboard. Try entering <code className="px-1.5 py-0.5 bg-[#E8E1D5] border border-[#D4CCBE] font-mono text-[#252720]">http://localhost:5000/api/health</code> or <code className="px-1.5 py-0.5 bg-[#E8E1D5] border border-[#D4CCBE] font-mono text-[#252720]">http://192.168.1.1</code>.
+                The security engine detects and rejects loopback and private subnets before opening any socket.
               </p>
             </div>
           </div>
 
           {/* Workflow 5 */}
           <div className="flex gap-3">
-            <div className="h-6 w-6 rounded-full bg-[#192330] border border-[#263241] text-[#3DD6C6] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
+            <div className="h-6 w-6 rounded-sm bg-[#292B24] text-[#FAF8F2] font-mono flex items-center justify-center text-xs shrink-0 mt-0.5">
               5
             </div>
             <div>
-              <h3 className="font-semibold text-[#E8EDF4] text-sm">Public Status Page</h3>
-              <p className="text-[#9AA8B8] mt-0.5 leading-relaxed">
-                Click <b>Public Status Page</b> in the navigation. Select which monitors to display, copy your public link (<code className="px-1.5 py-0.5 bg-[#0E131A] border border-[#263241] font-mono text-[#8BB8FF]">/#/status/:slug</code>), and view it in an incognito window without logging in!
+              <h3 className="font-serif font-normal text-[#252720] text-sm">Public status page</h3>
+              <p className="text-[#77766B] mt-0.5 leading-relaxed">
+                Navigate to <b>Public Status Page</b>. Select which monitors are visible, copy the public link (<code className="px-1.5 py-0.5 bg-[#E8E1D5] border border-[#D4CCBE] font-mono text-[#252720]">/#/status/:slug</code>), and view the live status in an unauthenticated incognito tab.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-[#1D2733] flex justify-end">
+        <div className="mt-6 pt-4 border-t border-[#D4CCBE] flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg bg-[#192330] hover:bg-[#202B39] border border-[#263241] text-[#E8EDF4] font-medium text-xs transition-colors"
+            className="px-4 py-2 rounded-sm bg-[#E8E1D5]/60 hover:bg-[#E8E1D5] border border-[#D4CCBE] text-[#252720] font-medium text-xs transition-colors cursor-pointer"
           >
-            Got it, close guide
+            Close guide
           </button>
         </div>
       </div>

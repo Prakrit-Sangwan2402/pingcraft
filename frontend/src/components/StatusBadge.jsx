@@ -5,28 +5,28 @@ export default function StatusBadge({ status, size = 'md' }) {
 
   const configs = {
     OPERATIONAL: {
-      bg: 'bg-[#45D483]/10 text-[#45D483] border-[#45D483]/25',
-      dot: 'bg-[#45D483]',
+      bg: 'bg-[#427A55]/10 text-[#427A55] border-[#427A55]/30',
+      dot: 'bg-[#427A55]',
       label: 'Operational'
     },
     DEGRADED: {
-      bg: 'bg-[#F2B866]/10 text-[#F2B866] border-[#F2B866]/25',
-      dot: 'bg-[#F2B866]',
+      bg: 'bg-[#C17B27]/10 text-[#C17B27] border-[#C17B27]/30',
+      dot: 'bg-[#C17B27]',
       label: 'Degraded'
     },
     DOWN: {
-      bg: 'bg-[#FF647C]/10 text-[#FF647C] border-[#FF647C]/25',
-      dot: 'bg-[#FF647C]',
+      bg: 'bg-[#C63E32]/10 text-[#C63E32] border-[#C63E32]/30',
+      dot: 'bg-[#C63E32]',
       label: 'Outage'
     },
     PAUSED: {
-      bg: 'bg-[#8592A3]/10 text-[#8592A3] border-[#8592A3]/25',
-      dot: 'bg-[#8592A3]',
+      bg: 'bg-[#E8E1D5] text-[#77766B] border-[#D4CCBE]',
+      dot: 'bg-[#77766B]',
       label: 'Paused'
     },
     NO_DATA: {
-      bg: 'bg-[#192330] text-[#9AA8B8] border-[#263241]',
-      dot: 'bg-[#687789]',
+      bg: 'bg-[#FAF8F2] text-[#77766B] border-[#D4CCBE]',
+      dot: 'bg-[#77766B]',
       label: 'No data'
     }
   };
@@ -36,7 +36,7 @@ export default function StatusBadge({ status, size = 'md' }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-md border font-medium tracking-tight ${
+      className={`inline-flex items-center gap-1.5 rounded-xs border font-mono tracking-tight font-medium ${
         isSm ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs'
       } ${current.bg}`}
     >
