@@ -1,194 +1,124 @@
 ================================================================================
-PINGCRAFT — DEMO VIDEO WALKTHROUGH SCRIPT (UPDATED)
+PINGCRAFT — 4-MINUTE VIDEO DEMO SCRIPT (CONVERSATIONAL & CRISP)
 ================================================================================
 Presenter: Prakrit Sangwan
-Role: Full-Stack Developer
-Project: PingCraft (Synthetic API Health Monitoring, Incident Response & Status Platform)
-UI Style: Handcrafted "Industrial Editorial" Design System
-Live App URL: https://pingcraft-gamma.vercel.app
-Target Duration: 3:30 to 4:45 Minutes
+Project: PingCraft (API Health Monitoring & Incident Management)
+Live App: https://pingcraft-gamma.vercel.app
+Target Duration: 3:30 to 4:30 Minutes (Word Count: ~480 words)
 ================================================================================
 
 --------------------------------------------------------------------------------
-PART 1: INTRODUCTION, DESIGN PHILOSOPHY & AUTHENTICATION (0:00 – 0:50)
+1. INTRODUCTION & LOGIN (0:00 – 0:45)
 --------------------------------------------------------------------------------
-[ACTION: Screen is on https://pingcraft-gamma.vercel.app at the Sign In page.]
+[ACTION: Show Sign In page on https://pingcraft-gamma.vercel.app]
 
-"Hello everyone, my name is Prakrit Sangwan, and today I’m presenting PingCraft —
-an end-to-end synthetic API health monitoring and incident response platform built
-on the MERN stack.
+"Hi everyone, I'm Prakrit Sangwan, and today I'm showing you PingCraft, an API
+health monitoring and incident management platform I built using the MERN stack.
 
-The problem PingCraft solves is critical: APIs frequently suffer silent degradation,
-latency regressions, or intermittent 500 errors, and engineering teams often don't
-find out until users complain. PingCraft continuously probes critical endpoints,
-measures high-precision latency, triggers automated incident lifecycles when SLA
-thresholds breach, and publishes public status bulletins for transparency.
+APIs often fail silently, and developers usually don't know until users complain.
+PingCraft solves this by pinging endpoints in the background, measuring real-time
+latency, and automatically triggering incidents when services go down.
 
-Before logging in, notice the visual identity here: we deliberately stepped away
-from generic, AI-generated dark-blue dashboard templates. Instead, PingCraft uses an
-'Industrial Editorial' design language — inspired by precision lab equipment,
-warm paper typography, stone dividing rules, and technical measurement instruments.
+You can create a new account here with email and password, which uses bcrypt hashing
+on the backend. Since I already have an account, let me log in."
 
-On this authentication screen, any new user can register with an email and password,
-which uses bcrypt password hashing with salt rounds on our backend. Since I already
-have my account set up, let me log right in."
+[ACTION: Type credentials and click 'Sign In']
 
-[ACTION: Enter email and password, then click 'Sign In'.]
-
-"Once logged in, you can see my username displayed right here at the top corner
-alongside our session controls.
-
-Technically, how this works: upon successful login, our Express backend generates a
-signed JSON Web Token containing the user's ID and display name. Our React
-AuthContext decodes this payload, keeps it in state and local storage, and
-attaches it as a Bearer authorization header to every subsequent API request while
-rendering the verified session right here."
+"Once I log in, you can see my username right here at the top corner.
+Behind the scenes, the backend generates a signed JWT token on login. The frontend
+stores this token in React state and local storage, and attaches it as a Bearer
+header to authenticate every API call."
 
 
 --------------------------------------------------------------------------------
-PART 2: COCKPIT DASHBOARD & INSTANT PROBE WITH SSRF DEFENSE (0:50 – 1:50)
+2. DASHBOARD & INSTANT PROBE WITH SSRF DEFENSE (0:45 – 1:40)
 --------------------------------------------------------------------------------
-[ACTION: Land on the main Monitors Cockpit dashboard.]
+[ACTION: Show Cockpit Dashboard]
 
-"This brings us to the Monitors Cockpit.
+"Here on the main dashboard, we get an instant overview: total monitors, operational
+services, degraded endpoints, and active outages.
 
-Notice the composition:
-- At the top, we have system-wide KPIs: Total Monitors, Operational, Degraded,
-  Outages, and Paused services, rendered with tabular monospace numbers and
-  earthy status tones — muted forest green for healthy endpoints, ochre for
-  degraded, and brick red for active outages.
-- Instead of bulky rounded cards, the monitors are organized into an editorial
-  register table with clean stone dividing rules.
+Before setting up background jobs, PingCraft has an Instant Probe feature to test
+any endpoint immediately without saving it to the database."
 
-Before setting up recurring background probes, PingCraft includes an on-demand
-Instant Probe diagnostic instrument. Let me open it."
+[ACTION: Click 'Instant Probe' button]
 
-[ACTION: Click 'Instant Probe' button. Modal pops up.]
+"Because users can enter any URL, we built in SSRF protection to stop attackers from
+probing internal servers.
 
-"This modal lets engineers immediately probe an endpoint. But more importantly,
-this is where our custom SSRF Protection Engine comes into play. Because synthetic
-monitors accept arbitrary URLs, malicious users often try to query internal networks
-or cloud metadata.
+Let's test it: if I try to ping localhost or a private cloud IP..."
 
-Let's test our defense. If I try to target loopback at http://localhost:5000 or
-an AWS metadata IP like 169.254.169.254..."
+[ACTION: Enter http://localhost:5000/api/health and click 'Execute Probe']
 
-[ACTION: Type http://localhost:5000/api/health and click 'Execute Probe'.]
+"...it's blocked immediately by our backend validator before opening any connection.
 
-"...the request is immediately blocked by our backend DNS and subnet validator
-before any socket connection is opened.
+Now let's test a real public endpoint, like GitHub's API."
 
-Now let’s test a legitimate public endpoint, like https://api.github.com."
+[ACTION: Enter https://api.github.com and click 'Execute Probe']
 
-[ACTION: Type https://api.github.com and click 'Execute Probe'.]
-
-"Within milliseconds, we get an industrial diagnostic readout: HTTP 200 OK, the
-exact latency measured with Node's monotonic performance.now() clock, payload size
-in bytes, and sanitized headers."
+"And in just a few milliseconds, we get the exact response time, HTTP status code,
+and payload size."
 
 
 --------------------------------------------------------------------------------
-PART 3: MONITOR REGISTRY & DEEP TELEMETRY ANALYTICS (1:50 – 2:50)
+3. MONITOR METRICS & TELEMETRY (1:40 – 2:30)
 --------------------------------------------------------------------------------
-[ACTION: Close Instant Probe modal. Point to 'Add Monitor' and then click a monitor row.]
+[ACTION: Close modal, click on a monitor to open Monitor Detail]
 
-"Creating a continuous synthetic monitor is straightforward: clicking 'Add Monitor'
-lets us configure the HTTP method, request headers, payload body, check interval
-like every 15 or 30 seconds, and failure SLA thresholds.
+"To monitor an endpoint continuously, you can click 'Add Monitor' and set your URL,
+check frequency—like every 15 or 30 seconds—and failure thresholds.
 
-Let’s click into one of our active monitors to view its deep telemetry page."
-
-[ACTION: Click on a monitor row to open the Monitor Detail page.]
-
-"Here in the Monitor Detail view:
-- The page heading is styled with an editorial serif typeface, pairing clean visual
-  restraint with dense engineering data.
-- Up top, we have rolling 24-hour and 7-day uptime percentages computed by our
-  dedicated backend metrics service. Notice that if an endpoint lacks sufficient
-  historical data, it honestly displays 'No data' rather than displaying a false 100%.
-- Below that is our Latency Trend chart on a soft ivory canvas with a vermilion trace
-  line, plotting latency history alongside our calculated 95th percentile (p95)
-  latency using the nearest-rank mathematical method.
-- Further down is the ping telemetry log, displaying precision UTC timestamps, HTTP
-  status codes, response times, and failure categories for every probe.
-- We also have a one-click pause toggle up here, which instantly excludes this monitor
-  from the background scheduler workload."
+Opening an active monitor shows detailed telemetry:
+- Rolling 24-hour and 7-day uptime percentages.
+- A latency trend chart over time, along with the 95th percentile (p95) response time.
+- And down here is the ping history log, showing the exact timestamp and status for
+  every probe.
+- You can also pause any monitor anytime with one click."
 
 
 --------------------------------------------------------------------------------
-PART 4: INCIDENT WAR ROOM & STATE MACHINE (2:50 – 3:45)
+4. INCIDENT WAR ROOM & AUTO-RECOVERY (2:30 – 3:20)
 --------------------------------------------------------------------------------
-[ACTION: Click on the 'Incident War Room' tab in the top contrast navigation bar.]
+[ACTION: Click 'Incident War Room' in top navbar]
 
-"Next, let’s inspect the Incident War Room.
+"Next is the Incident War Room.
 
-When an endpoint fails its consecutive failure threshold — for example, 2 consecutive
-failed checks — the monitor automatically transitions from DEGRADED to OUTAGE,
-and PingCraft's deterministic state machine creates an incident record.
+When an endpoint fails consecutive checks, it flips from Degraded to Outage, and the
+system automatically creates an incident record. We use database constraints to make
+sure a monitor never gets duplicate active incidents.
 
-Our MongoDB database enforces partial unique compound indexing, ensuring that a
-monitor can have at most one active incident at any time, preventing alert spam.
+From here, responders can track the incident: moving it from Triggered, to
+Investigating, to Mitigating, while leaving timeline notes."
 
-Responders can manage the incident lifecycle through a structured workflow:
-moving from TRIGGERED to INVESTIGATING with root-cause notes, then to MITIGATING,
-and finally to RESOLVED."
+[ACTION: Click an active incident and click 'Acknowledge & Investigate']
 
-[ACTION: Click an active incident, type a note, transition to INVESTIGATING, show timeline.]
+"Every update is logged in an audit timeline.
 
-"Every status update appends an event to this immutable audit timeline, recording
-the actor, timestamp, and message.
-
-Even better: when the service recovers and passes consecutive probes meeting its
-recovery threshold, PingCraft's background scheduler automatically resolves the
-incident, logs the exact downtime duration in seconds, and restores the monitor
-to OPERATIONAL without needing human intervention."
+Best of all: when the service recovers and passes checks again, PingCraft automatically
+resolves the incident, logs the total downtime, and marks the service operational
+without any manual intervention."
 
 
 --------------------------------------------------------------------------------
-PART 5: BRANDED PUBLIC STATUS BULLETIN (3:45 – 4:15)
+5. PUBLIC STATUS PAGE & TECH STACK (3:20 – 4:10)
 --------------------------------------------------------------------------------
-[ACTION: Click 'Status Page' in navigation, then click 'View Live Page' or open /#/status/api-status.]
+[ACTION: Open Public Status Page tab /#/status/api-status]
 
-"For transparent communication with users and stakeholders, PingCraft provides
-Public Status Bulletins.
+"For end users and customers, PingCraft provides a Public Status Page. This page is
+completely public, requires no login, reveals no sensitive tokens, and shows
+real-time uptime and active incidents.
 
-From the admin settings, we can choose our custom URL slug and select exactly which
-monitors are visible externally.
+[ACTION: Switch to Terminal showing passing test results]
 
-Opening the live page: notice how this public bulletin is styled like an official
-technical notice printed on warm paper. It is completely unauthenticated, reveals
-zero API keys or server secrets, and gives users real-time component health,
-uptime percentages, and historical incident transparency."
+Under the hood, the project is built on the MERN stack:
+- React 18, Vite, and Tailwind CSS deployed on Vercel.
+- Node.js and Express deployed on Render.
+- MongoDB Atlas with Mongoose for indexing and data storage.
+- A background scheduler running parallel synthetic probes.
 
+To ensure reliability, the backend includes an automated test suite. Right here in
+the terminal, all 35 tests covering SSRF security, metrics, and incident workflows
+are passing cleanly.
 
---------------------------------------------------------------------------------
-PART 6: TECH STACK & AUTOMATED TEST SUITE (4:15 – 4:45)
---------------------------------------------------------------------------------
-[ACTION: Switch screen to terminal / VS Code displaying 'npm test' output.]
-
-"Under the hood, the entire architecture is built on the modern MERN stack:
-- Frontend: React 18, Vite, and Tailwind CSS with custom editorial design tokens,
-  deployed live on Vercel.
-- Backend: Node.js and Express, hosted on Render.
-- Database: MongoDB Atlas with Mongoose, utilizing compound indexes for fast
-  telemetry queries and partial indexes for incident integrity.
-- Engine: A non-blocking background scheduler running concurrent synthetic probes
-  with monotonic high-resolution latency timers and an SSRF security shield.
-
-To ensure production-grade reliability, the codebase is backed by a comprehensive
-test suite. As you can see right here in my terminal: all 35 unit and integration
-tests in Jest and Supertest — covering the SSRF defense engine, p95 percentile
-calculations, the incident state machine, and end-to-end API workflows — are
-passing with zero errors.
-
-Both the live Vercel application and the GitHub repository are linked in the
-description. Thank you for watching!"
-
-================================================================================
-QUICK RECORDING TIPS:
-1. Screen Resolution: 1080p full screen (F11 in browser hides address/bookmark bars).
-2. Pacing: Aim for a calm, confident speaking cadence (~4 minutes total).
-3. Visuals: Let the new warm paper & vermilion aesthetic shine — it looks distinct
-   and handcrafted compared to typical dark SaaS templates.
-4. Submission Link: https://forms.gle/sBy4sfqyiRG2Zpom9
+Both the live link and GitHub repository are in the description. Thank you!"
 ================================================================================

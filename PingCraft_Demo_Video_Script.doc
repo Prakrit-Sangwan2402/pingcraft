@@ -2,92 +2,87 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PingCraft - Demo Video Walkthrough Script</title>
+<title>PingCraft - 4-Minute Demo Video Walkthrough Script</title>
 <style>
   body {
-    font-family: 'Georgia', 'Calibri', 'Segoe UI', serif;
-    line-height: 1.6;
-    color: #252720;
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    line-height: 1.5;
+    color: #1e293b;
     margin: 40px;
-    background-color: #faf8f2;
+    background-color: #f8fafc;
   }
   .container {
-    max-width: 800px;
+    max-width: 780px;
     margin: 0 auto;
     background: #ffffff;
-    padding: 40px;
-    border: 1px solid #d4ccbe;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 36px 44px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-radius: 6px;
   }
   h1 {
-    font-family: 'Newsreader', 'Georgia', serif;
-    color: #252720;
-    border-bottom: 2px solid #d84a2f;
+    color: #0f172a;
+    border-bottom: 2px solid #2563eb;
     padding-bottom: 8px;
-    font-size: 26pt;
-    font-weight: normal;
+    font-size: 20pt;
+    margin-top: 0;
     margin-bottom: 4px;
   }
   .subtitle {
-    font-size: 12pt;
-    color: #77766b;
+    font-size: 11pt;
+    color: #64748b;
     margin-top: 0;
-    margin-bottom: 24px;
-    font-family: 'Segoe UI', sans-serif;
+    margin-bottom: 20px;
   }
   .meta-box {
-    background-color: #f3efe6;
-    border: 1px solid #d4ccbe;
-    padding: 14px 18px;
-    margin-bottom: 25px;
-    font-size: 10.5pt;
-    font-family: 'Segoe UI', sans-serif;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 10px 16px;
+    margin-bottom: 22px;
+    font-size: 10pt;
   }
-  .meta-box strong { color: #252720; }
   h2 {
-    font-family: 'Segoe UI', sans-serif;
-    color: #252720;
-    font-size: 13pt;
-    font-weight: 600;
-    margin-top: 28px;
-    margin-bottom: 8px;
-    border-left: 4px solid #d84a2f;
-    padding-left: 10px;
+    color: #1e3a8a;
+    font-size: 12pt;
+    margin-top: 22px;
+    margin-bottom: 6px;
+    border-left: 3px solid #2563eb;
+    padding-left: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
   .action {
-    background-color: #f3efe6;
-    border-left: 3px solid #77766b;
-    padding: 8px 12px;
-    margin: 10px 0;
+    background-color: #f8fafc;
+    border-left: 3px solid #94a3b8;
+    padding: 6px 10px;
+    margin: 8px 0;
     font-style: italic;
-    color: #55544b;
-    font-size: 10.5pt;
-    font-family: 'Segoe UI', sans-serif;
+    color: #475569;
+    font-size: 9.5pt;
   }
   .spoken {
-    margin-left: 8px;
-    font-size: 11pt;
-    color: #252720;
+    margin-left: 4px;
+    font-size: 10.5pt;
+    color: #0f172a;
+    line-height: 1.6;
   }
-  .tip-box {
-    background-color: #f3efe6;
-    border: 1px dashed #d4ccbe;
-    padding: 14px 18px;
-    margin-top: 30px;
-    font-size: 10pt;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  .tip-box strong { color: #d84a2f; }
   .badge {
     display: inline-block;
-    padding: 2px 6px;
+    padding: 1px 5px;
     font-size: 9pt;
-    font-family: monospace;
-    background: #e8e1d5;
-    border: 1px solid #d4ccbe;
-    color: #252720;
+    font-family: Consolas, monospace;
+    background: #e2e8f0;
+    border-radius: 3px;
+    color: #0f172a;
+  }
+  .tip-box {
+    background-color: #eff6ff;
+    border: 1px dashed #93c5fd;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-top: 24px;
+    font-size: 9.5pt;
   }
 </style>
 </head>
@@ -95,8 +90,8 @@
 
 <div class="container">
 
-<h1>PingCraft — Video Demo Walkthrough Script</h1>
-<p class="subtitle">Complete 2 to 5-Minute Presentation Script &amp; Technical Explanation</p>
+<h1>PingCraft — 4-Minute Video Demo Script</h1>
+<p class="subtitle">Natural, conversational presentation script • Total reading time: ~3:30 to 4:15 min (~480 words)</p>
 
 <div class="meta-box">
   <table style="width: 100%; border-collapse: collapse;">
@@ -105,193 +100,146 @@
       <td style="width: 50%;"><strong>Target Duration:</strong> 3:30 &ndash; 4:30 Minutes</td>
     </tr>
     <tr>
-      <td><strong>Role:</strong> Full-Stack Developer</td>
-      <td><strong>Design Identity:</strong> Industrial Editorial Design System</td>
-    </tr>
-    <tr>
       <td><strong>Live App URL:</strong> <a href="https://pingcraft-gamma.vercel.app">https://pingcraft-gamma.vercel.app</a></td>
-      <td><strong>GitHub Repo:</strong> <a href="https://github.com/Prakrit-Sangwan2402/pingcraft">pingcraft (main branch)</a></td>
+      <td><strong>GitHub Repo:</strong> <a href="https://github.com/Prakrit-Sangwan2402/pingcraft">pingcraft (main)</a></td>
     </tr>
   </table>
 </div>
 
-<h2>Part 1: Introduction, Visual Identity &amp; Authentication (0:00 &ndash; 0:50)</h2>
+<h2>1. Introduction &amp; Login (0:00 &ndash; 0:45)</h2>
 
-<div class="action">[ACTION: Screen is on https://pingcraft-gamma.vercel.app at the Sign In page.]</div>
+<div class="action">[ACTION: Screen on https://pingcraft-gamma.vercel.app at the Sign In page]</div>
 
 <p class="spoken">
-&ldquo;Hello everyone, my name is Prakrit Sangwan, and today I&rsquo;m presenting PingCraft &mdash; an end-to-end synthetic API health monitoring and incident response platform built on the MERN stack.
+&ldquo;Hi everyone, I&rsquo;m Prakrit Sangwan, and today I&rsquo;m showing you PingCraft, an API health monitoring and incident management platform I built using the MERN stack.
 </p>
 
 <p class="spoken">
-The problem PingCraft solves is critical: APIs frequently suffer silent degradation, latency spikes, or intermittent 500 errors, and engineering teams usually don&rsquo;t find out until users complain. PingCraft continuously probes critical endpoints, measures high-precision latency, triggers automated incident lifecycles when SLA thresholds breach, and publishes public status bulletins for transparency.
+APIs often fail silently, and developers usually don&rsquo;t know until users complain. PingCraft solves this by pinging endpoints in the background, measuring real-time latency, and automatically triggering incidents when services go down.
 </p>
 
 <p class="spoken">
-Before logging in, notice our visual identity: we deliberately stepped away from generic, AI-generated dark navy templates. Instead, PingCraft uses an <strong>Industrial Editorial</strong> design language &mdash; inspired by precision measurement instruments, warm paper typography, stone dividing rules, and technical notebooks.
+You can create a new account here with email and password, which uses bcrypt hashing on the backend. Since I already have an account, let me log in.&rdquo;
+</p>
+
+<div class="action">[ACTION: Type credentials and click &lsquo;Sign In&rsquo;]</div>
+
+<p class="spoken">
+&ldquo;Once I log in, you can see my username right here at the top corner.
+Behind the scenes, the backend generates a signed JWT token on login. The frontend stores this token in React state and local storage, and attaches it as a Bearer header to authenticate every API call.&rdquo;
+</p>
+
+<h2>2. Dashboard &amp; Instant Probe with SSRF Defense (0:45 &ndash; 1:40)</h2>
+
+<div class="action">[ACTION: Land on the Cockpit Dashboard]</div>
+
+<p class="spoken">
+&ldquo;Here on the main dashboard, we get an instant overview: total monitors, operational services, degraded endpoints, and active outages.
 </p>
 
 <p class="spoken">
-On this authentication screen, any new user can register with email and password, which uses bcrypt password hashing with salt rounds on our backend. Since I already have my account set up, let me log right in.&rdquo;
+Before setting up background jobs, PingCraft has an Instant Probe feature to test any endpoint immediately without saving it to the database.&rdquo;
 </p>
 
-<div class="action">[ACTION: Enter email and password, then click &lsquo;Sign In&rsquo;.]</div>
+<div class="action">[ACTION: Click &lsquo;Instant Probe&rsquo; button. Modal opens.]</div>
 
 <p class="spoken">
-&ldquo;Once logged in, notice my username displayed right here at the top corner alongside our session controls.
+&ldquo;Because users can enter any URL, we built in SSRF protection to stop attackers from probing internal servers.
+Let&rsquo;s test it: if I try to ping localhost or a private cloud IP...&rdquo;
+</p>
+
+<div class="action">[ACTION: Enter http://localhost:5000/api/health and click &lsquo;Execute Probe&rsquo;]</div>
+
+<p class="spoken">
+&ldquo;...it&rsquo;s blocked immediately by our backend validator before opening any connection.
+Now let&rsquo;s test a real public endpoint, like GitHub&rsquo;s API.&rdquo;
+</p>
+
+<div class="action">[ACTION: Enter https://api.github.com and click &lsquo;Execute Probe&rsquo;]</div>
+
+<p class="spoken">
+&ldquo;And in just a few milliseconds, we get the exact response time, HTTP status code, and payload size.&rdquo;
+</p>
+
+<h2>3. Monitor Metrics &amp; Telemetry (1:40 &ndash; 2:30)</h2>
+
+<div class="action">[ACTION: Close modal, click on a monitor row to open Monitor Detail]</div>
+
+<p class="spoken">
+&ldquo;To monitor an endpoint continuously, you can click &lsquo;Add Monitor&rsquo; and set your URL, check frequency&mdash;like every 15 or 30 seconds&mdash;and failure thresholds.
 </p>
 
 <p class="spoken">
-<strong>Why this works technically:</strong> upon successful authentication, our Express backend generates a signed JSON Web Token containing the user&rsquo;s ID and name. Our React AuthContext decodes this payload, keeps it in memory and local storage, and attaches it as a Bearer authorization header to every subsequent API request while displaying our active session status right here.&rdquo;
-</p>
-
-<h2>Part 2: Cockpit Dashboard &amp; Instant Probe with SSRF Defense (0:50 &ndash; 1:50)</h2>
-
-<div class="action">[ACTION: Land on the main Monitors Cockpit dashboard.]</div>
-
-<p class="spoken">
-&ldquo;This brings us to the Monitors Cockpit.
-</p>
-
-<p class="spoken">
-Notice the layout:
+Opening an active monitor shows detailed telemetry:
 </p>
 <ul class="spoken">
-  <li>At the top, we have system-wide KPIs: Total Monitors, Operational, Degraded, Outages, and Paused services, rendered with tabular monospace numbers and calibrated earth tones &mdash; muted forest green for healthy endpoints, ochre for degraded, and brick red for active outages.</li>
-  <li>Instead of bulky cards, the monitors are organized into an editorial register table separated by clean stone dividing rules.</li>
+  <li>Rolling 24-hour and 7-day uptime percentages.</li>
+  <li>A latency trend chart over time, along with the 95th percentile (p95) response time.</li>
+  <li>And down here is the ping history log, showing the exact timestamp and status for every probe.</li>
+  <li>You can also pause any monitor anytime with one click.&rdquo;</li>
+</ul>
+
+<h2>4. Incident War Room &amp; Auto-Recovery (2:30 &ndash; 3:20)</h2>
+
+<div class="action">[ACTION: Click &lsquo;Incident War Room&rsquo; in top navbar]</div>
+
+<p class="spoken">
+&ldquo;Next is the Incident War Room.
+</p>
+
+<p class="spoken">
+When an endpoint fails consecutive checks, it flips from Degraded to Outage, and the system automatically creates an incident record. We use database constraints to make sure a monitor never gets duplicate active incidents.
+</p>
+
+<p class="spoken">
+From here, responders can track the incident: moving it from Triggered, to Investigating, to Mitigating, while leaving timeline notes.&rdquo;
+</p>
+
+<div class="action">[ACTION: Click an active incident and click &lsquo;Acknowledge &amp; Investigate&rsquo;]</div>
+
+<p class="spoken">
+&ldquo;Every update is logged in an audit timeline.
+</p>
+
+<p class="spoken">
+Best of all: when the service recovers and passes checks again, PingCraft automatically resolves the incident, logs the total downtime, and marks the service operational without any manual intervention.&rdquo;
+</p>
+
+<h2>5. Public Status Page &amp; Tech Stack (3:20 &ndash; 4:10)</h2>
+
+<div class="action">[ACTION: Open Public Status Page tab /#/status/api-status]</div>
+
+<p class="spoken">
+&ldquo;For end users and customers, PingCraft provides a Public Status Page. This page is completely public, requires no login, reveals no sensitive tokens, and shows real-time uptime and active incidents.
+</p>
+
+<div class="action">[ACTION: Switch to Terminal showing 'npm test' passing]</div>
+
+<p class="spoken">
+Under the hood, the project is built on the MERN stack:
+</p>
+<ul class="spoken">
+  <li>React 18, Vite, and Tailwind CSS deployed on Vercel.</li>
+  <li>Node.js and Express deployed on Render.</li>
+  <li>MongoDB Atlas with Mongoose for indexing and data storage.</li>
+  <li>A background scheduler running parallel synthetic probes.</li>
 </ul>
 
 <p class="spoken">
-Before setting up recurring background probes, PingCraft includes an on-demand Instant Probe diagnostic instrument. Let me open it.&rdquo;
-</p>
-
-<div class="action">[ACTION: Click &lsquo;Instant Probe&rsquo; button. Modal pops up.]</div>
-
-<p class="spoken">
-&ldquo;This modal lets engineers immediately probe an endpoint. But more importantly, this is where our custom SSRF Protection Engine comes into play. Because synthetic monitors accept arbitrary URLs, attackers often try to query internal loopback addresses or cloud metadata.
+To ensure reliability, the backend includes an automated test suite. Right here in the terminal, all 35 tests covering SSRF security, metrics, and incident workflows are passing cleanly.
 </p>
 
 <p class="spoken">
-Let&rsquo;s test our defense. If I try to target loopback at <span class="badge">http://localhost:5000</span> or an AWS metadata IP like <span class="badge">169.254.169.254</span>...&rdquo;
-</p>
-
-<div class="action">[ACTION: Type http://localhost:5000/api/health and click &lsquo;Execute Probe&rsquo;.]</div>
-
-<p class="spoken">
-&ldquo;...the request is immediately blocked by our backend DNS and subnet validator before any socket connection is opened.
-</p>
-
-<p class="spoken">
-Now let&rsquo;s test a legitimate public endpoint, like <span class="badge">https://api.github.com</span>.&rdquo;
-</p>
-
-<div class="action">[ACTION: Type https://api.github.com and click &lsquo;Execute Probe&rsquo;.]</div>
-
-<p class="spoken">
-&ldquo;Within milliseconds, we get an industrial diagnostic readout: HTTP 200 OK, the exact latency measured with Node&rsquo;s monotonic <span class="badge">performance.now()</span> clock, payload size in bytes, and sanitized headers.&rdquo;
-</p>
-
-<h2>Part 3: Monitor Registry &amp; Deep Telemetry Analytics (1:50 &ndash; 2:50)</h2>
-
-<div class="action">[ACTION: Close Instant Probe modal. Click on a monitor row to open Monitor Detail.]</div>
-
-<p class="spoken">
-&ldquo;Creating a synthetic monitor is simple: clicking &lsquo;Add Monitor&rsquo; lets us configure the HTTP method, custom request headers, check interval &mdash; such as every 15 or 30 seconds &mdash; and consecutive failure SLA thresholds.
-</p>
-
-<p class="spoken">
-Let&rsquo;s click into one of our active monitors to view its deep telemetry page.&rdquo;
-</p>
-
-<div class="action">[ACTION: Monitor Detail view is now visible.]</div>
-
-<p class="spoken">
-&ldquo;Here in the detail view:
-</p>
-<ul class="spoken">
-  <li>The page heading is set in an editorial serif typeface, pairing aesthetic restraint with dense engineering telemetry.</li>
-  <li>Up top, we have rolling 24-hour and 7-day uptime percentages computed by our dedicated backend metrics service. Notice that if an endpoint lacks sufficient historical data, it honestly displays &lsquo;No data&rsquo; rather than faking 100%.</li>
-  <li>Below that is our Latency Trend chart on a soft ivory canvas with a vermilion trace line, plotting latency history alongside our calculated 95th percentile (p95) latency using the nearest-rank mathematical method.</li>
-  <li>Further down is the ping telemetry log, displaying precision UTC timestamps, HTTP status codes, response times, and failure classifications for every probe.</li>
-  <li>We can also pause the monitor anytime with one click, which instantly excludes it from the scheduler workload.&rdquo;</li>
-</ul>
-
-<h2>Part 4: Incident War Room &amp; State Machine (2:50 &ndash; 3:45)</h2>
-
-<div class="action">[ACTION: Click &lsquo;Incident War Room&rsquo; tab in the top contrast navigation bar.]</div>
-
-<p class="spoken">
-&ldquo;Next, let&rsquo;s inspect the Incident War Room.
-</p>
-
-<p class="spoken">
-When an endpoint fails its consecutive failure threshold &mdash; for example, 2 consecutive failed checks &mdash; the monitor automatically transitions from DEGRADED to OUTAGE, and PingCraft&rsquo;s deterministic state machine opens an incident record.
-</p>
-
-<p class="spoken">
-Our MongoDB database enforces partial unique compound indexing, ensuring that a monitor can have at most one active incident at any time, preventing alert fatigue and duplicate spam.
-</p>
-
-<p class="spoken">
-Responders can manage the incident lifecycle through a structured workflow: moving from <span class="badge">TRIGGERED</span> to <span class="badge">INVESTIGATING</span> with root-cause notes, then to <span class="badge">MITIGATING</span>, and finally to <span class="badge">RESOLVED</span>.&rdquo;
-</p>
-
-<div class="action">[ACTION: Click an active incident, type an investigation note, click &lsquo;Acknowledge &amp; Investigate&rsquo;, show timeline.]</div>
-
-<p class="spoken">
-&ldquo;Every status change appends an event to this immutable audit timeline, recording the actor, timestamp, and update note.
-</p>
-
-<p class="spoken">
-Even better: when the service recovers and passes consecutive probes meeting its recovery threshold, PingCraft&rsquo;s background scheduler automatically resolves the incident, logs the exact downtime duration in seconds, and restores the monitor to OPERATIONAL without human intervention.&rdquo;
-</p>
-
-<h2>Part 5: Branded Public Status Bulletin (3:45 &ndash; 4:15)</h2>
-
-<div class="action">[ACTION: Click &lsquo;Public Status Page&rsquo; in navigation, then click &lsquo;View Live Page&rsquo; or open /#/status/api-status.]</div>
-
-<p class="spoken">
-&ldquo;For transparent communication with users and stakeholders, PingCraft provides Public Status Bulletins.
-</p>
-
-<p class="spoken">
-From the admin settings, we can choose our custom URL slug and select exactly which components are visible externally.
-</p>
-
-<p class="spoken">
-Opening the live page: notice how this public bulletin is styled like an official technical notice printed on warm paper. It is completely unauthenticated, reveals zero API keys or server secrets, and gives users real-time component health, uptime percentages, and historical incident transparency.&rdquo;
-</p>
-
-<h2>Part 6: Tech Stack &amp; Automated Test Suite (4:15 &ndash; 4:45)</h2>
-
-<div class="action">[ACTION: Switch window to VS Code or Terminal displaying &lsquo;npm test&rsquo; output.]</div>
-
-<p class="spoken">
-&ldquo;Under the hood, the entire architecture is built on the modern MERN stack:
-</p>
-<ul class="spoken">
-  <li><strong>Frontend:</strong> React 18, Vite, and Tailwind CSS with custom editorial design tokens, deployed live on Vercel.</li>
-  <li><strong>Backend:</strong> Node.js and Express, hosted on Render.</li>
-  <li><strong>Database:</strong> MongoDB Atlas with Mongoose, utilizing compound indexes for fast telemetry queries and partial indexes for incident integrity.</li>
-  <li><strong>Engine:</strong> A non-blocking background scheduler running concurrent synthetic probes with monotonic high-resolution latency timers and an SSRF security shield.</li>
-</ul>
-
-<p class="spoken">
-To ensure production-grade reliability, the codebase is backed by a comprehensive test suite. As you can see right here in my terminal: all 35 unit and integration tests in Jest and Supertest &mdash; covering the SSRF defense engine, p95 percentile calculations, the incident state machine, and end-to-end API workflows &mdash; are passing with zero errors.
-</p>
-
-<p class="spoken">
-Both the live Vercel application and the GitHub repository are linked in the description. Thank you for watching!&rdquo;
+Both the live link and GitHub repository are in the description. Thank you!&rdquo;
 </p>
 
 <div class="tip-box">
-  <strong>Quick Recording Checklist:</strong>
-  <ol style="margin-top: 6px; padding-left: 20px;">
-    <li>Screen Resolution: 1080p full screen (press F11 in browser to hide bookmarks/search bar).</li>
-    <li>Pacing: Aim for a calm, confident speaking cadence (~4 minutes total).</li>
-    <li>Visual Highlight: Let the new warm paper &amp; vermilion aesthetic shine &mdash; explain why you chose an intentional Industrial Editorial design over generic templates.</li>
-    <li>Upload &amp; Submission: Upload to YouTube as Unlisted (or Google Drive with &ldquo;Anyone with link can view&rdquo;) and submit at <a href="https://forms.gle/sBy4sfqyiRG2Zpom9">https://forms.gle/sBy4sfqyiRG2Zpom9</a>.</li>
-  </ol>
+  <strong>Recording Checklist:</strong>
+  <ul style="margin: 4px 0 0 16px; padding: 0;">
+    <li>Keep speaking pace steady and natural (you have ~480 words, giving you plenty of time).</li>
+    <li>Fullscreen browser with F11.</li>
+    <li>Submit video link at <a href="https://forms.gle/sBy4sfqyiRG2Zpom9">https://forms.gle/sBy4sfqyiRG2Zpom9</a>.</li>
+  </ul>
 </div>
 
 </div>
