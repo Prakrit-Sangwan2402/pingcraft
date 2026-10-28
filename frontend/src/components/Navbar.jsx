@@ -20,7 +20,7 @@ export default function Navbar({ activeTab, onTabChange, onOpenGuide }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-800 bg-[#0b0d13]/95 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-[#263241] bg-[#0E131A]/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-8">
@@ -28,11 +28,11 @@ export default function Navbar({ activeTab, onTabChange, onOpenGuide }) {
             onClick={() => onTabChange('monitors')}
             className="flex items-center gap-3 cursor-pointer select-none"
           >
-            <div className="h-8 w-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-100 shadow-sm">
-              <Activity className="w-5 h-5 text-emerald-400" />
+            <div className="h-8 w-8 rounded-lg bg-[#131A23] border border-[#263241] flex items-center justify-center text-[#E8EDF4] shadow-sm">
+              <Activity className="w-4 h-4 text-[#3DD6C6]" />
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-base tracking-tight text-white">PingCraft</span>
+              <span className="font-semibold text-base tracking-tight text-[#E8EDF4]">PingCraft</span>
             </div>
           </div>
 
@@ -40,30 +40,30 @@ export default function Navbar({ activeTab, onTabChange, onOpenGuide }) {
           <nav className="hidden md:flex items-center gap-1.5">
             <button
               onClick={() => onTabChange('monitors')}
-              className={`px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors ${
                 activeTab === 'monitors'
-                  ? 'bg-zinc-800 text-white shadow-sm'
-                  : 'text-zinc-400 hover:text-white hover:bg-zinc-850'
+                  ? 'bg-[#192330] text-[#E8EDF4] border border-[#263241] shadow-sm'
+                  : 'text-[#9AA8B8] hover:text-[#E8EDF4] hover:bg-[#131A23]'
               }`}
             >
               Monitors
             </button>
             <button
               onClick={() => onTabChange('incidents')}
-              className={`px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors ${
                 activeTab === 'incidents'
-                  ? 'bg-zinc-800 text-white shadow-sm'
-                  : 'text-zinc-400 hover:text-white hover:bg-zinc-850'
+                  ? 'bg-[#192330] text-[#E8EDF4] border border-[#263241] shadow-sm'
+                  : 'text-[#9AA8B8] hover:text-[#E8EDF4] hover:bg-[#131A23]'
               }`}
             >
               Incident War Room
             </button>
             <button
               onClick={() => onTabChange('status-page-admin')}
-              className={`px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors ${
                 activeTab === 'status-page-admin'
-                  ? 'bg-zinc-800 text-white shadow-sm'
-                  : 'text-zinc-400 hover:text-white hover:bg-zinc-850'
+                  ? 'bg-[#192330] text-[#E8EDF4] border border-[#263241] shadow-sm'
+                  : 'text-[#9AA8B8] hover:text-[#E8EDF4] hover:bg-[#131A23]'
               }`}
             >
               Public Status Page
@@ -72,29 +72,29 @@ export default function Navbar({ activeTab, onTabChange, onOpenGuide }) {
         </div>
 
         {/* User, API Status & Guide */}
-        <div className="flex items-center gap-3.5">
+        <div className="flex items-center gap-3">
           {/* How to use button */}
           <button
             onClick={onOpenGuide}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-zinc-200 hover:text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-750 rounded-lg transition-colors shadow-sm"
+            className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-[#E8EDF4] hover:text-white bg-[#131A23] hover:bg-[#192330] border border-[#263241] rounded-lg transition-colors shadow-sm"
           >
-            <HelpCircle className="w-4 h-4 text-emerald-400" />
+            <HelpCircle className="w-3.5 h-3.5 text-[#3DD6C6]" />
             <span>How to Use</span>
           </button>
 
           {/* Health indicator */}
-          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
-            <span className={`w-2 h-2 rounded-full ${apiHealth ? 'bg-emerald-400' : 'bg-red-400'}`} />
+          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[#131A23] border border-[#263241] text-xs font-mono text-[#9AA8B8]">
+            <span className={`w-2 h-2 rounded-full ${apiHealth ? 'bg-[#45D483]' : 'bg-[#FF647C]'}`} />
             <span>{apiHealth ? 'Backend UP' : 'Connecting'}</span>
           </div>
 
           {user && (
-            <div className="flex items-center gap-3 pl-3 border-l border-zinc-800">
-              <span className="text-sm text-zinc-200 hidden sm:inline-block font-medium">{user.name}</span>
+            <div className="flex items-center gap-3 pl-3 border-l border-[#1D2733]">
+              <span className="text-xs text-[#E8EDF4] hidden sm:inline-block font-medium">{user.name}</span>
               <button
                 onClick={logout}
                 title="Sign out"
-                className="p-2 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-zinc-900 transition-colors"
+                className="p-1.5 rounded-lg text-[#9AA8B8] hover:text-[#FF647C] hover:bg-[#131A23] transition-colors"
               >
                 <LogOut className="w-4 h-4" />
               </button>

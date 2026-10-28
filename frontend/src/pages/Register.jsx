@@ -29,67 +29,67 @@ export default function Register({ onSwitchToLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#090a0f] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#0B0F14] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm text-center">
-        <div className="inline-flex items-center justify-center h-9 w-9 rounded-md bg-zinc-850 border border-zinc-700/80 text-zinc-100 mb-3 shadow-sm">
-          <Activity className="w-5 h-5 text-emerald-400" />
+        <div className="inline-flex items-center justify-center h-10 w-10 rounded-xl bg-[#131A23] border border-[#263241] text-[#E8EDF4] mb-3 shadow-sm">
+          <Activity className="w-5 h-5 text-[#3DD6C6]" />
         </div>
-        <h2 className="text-xl font-bold text-white tracking-tight">Create Account</h2>
-        <p className="mt-0.5 text-xs text-zinc-400">
+        <h2 className="text-xl font-semibold text-[#E8EDF4] tracking-tight">Create Account</h2>
+        <p className="mt-1 text-xs text-[#9AA8B8]">
           Start monitoring synthetic endpoints & SLA thresholds.
         </p>
       </div>
 
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="bg-[#12141a] border border-zinc-800/90 py-6 px-5 shadow-xl rounded-lg sm:px-8">
+        <div className="bg-[#131A23] border border-[#263241] py-7 px-6 shadow-xl rounded-xl sm:px-8">
           {error && (
-            <div className="mb-4 p-2.5 rounded bg-red-950/40 border border-red-800/50 text-red-300 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+            <div className="mb-4 p-2.5 rounded-lg bg-[#FF647C]/10 border border-[#FF647C]/20 text-[#FF647C] text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-[#FF647C] shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-3.5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1">
+              <label className="block text-xs font-medium text-[#9AA8B8] mb-1">
                 Full Name
               </label>
               <div className="relative">
-                <User className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-2.5" />
+                <User className="w-3.5 h-3.5 text-[#687789] absolute left-3 top-2.5" />
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={e => setName(e.target.value)}
                   placeholder="DevOps Engineer"
-                  className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md pl-8 pr-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600"
+                  className="w-full bg-[#0E131A] border border-[#263241] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#E8EDF4] placeholder-[#687789] focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1">
+              <label className="block text-xs font-medium text-[#9AA8B8] mb-1">
                 Email
               </label>
               <div className="relative">
-                <Mail className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-2.5" />
+                <Mail className="w-3.5 h-3.5 text-[#687789] absolute left-3 top-2.5" />
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="admin@example.com"
-                  className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md pl-8 pr-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600"
+                  className="w-full bg-[#0E131A] border border-[#263241] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#E8EDF4] placeholder-[#687789] focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1">
+              <label className="block text-xs font-medium text-[#9AA8B8] mb-1">
                 Password (min. 8 characters)
               </label>
               <div className="relative">
-                <Lock className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-2.5" />
+                <Lock className="w-3.5 h-3.5 text-[#687789] absolute left-3 top-2.5" />
                 <input
                   type="password"
                   required
@@ -97,7 +97,7 @@ export default function Register({ onSwitchToLogin }) {
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-[#0b0d12] border border-zinc-800 rounded-md pl-8 pr-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600"
+                  className="w-full bg-[#0E131A] border border-[#263241] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#E8EDF4] placeholder-[#687789] focus:outline-none focus:border-[#3DD6C6] focus:ring-1 focus:ring-[#3DD6C6]"
                 />
               </div>
             </div>
@@ -105,18 +105,18 @@ export default function Register({ onSwitchToLogin }) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-3 bg-white hover:bg-zinc-200 text-zinc-950 font-medium rounded-md shadow-sm transition-colors flex items-center justify-center gap-1.5 text-xs disabled:opacity-50 mt-1"
+              className="w-full py-2 px-3 bg-[#3DD6C6] hover:bg-[#59E2D2] text-[#0B0F14] font-semibold rounded-lg shadow-sm transition-colors flex items-center justify-center gap-1.5 text-xs disabled:opacity-50 mt-1"
             >
               {loading ? 'Creating...' : 'Create Account'}
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </form>
 
-          <div className="mt-5 pt-4 border-t border-zinc-800 text-center">
-            <span className="text-xs text-zinc-500">Already registered? </span>
+          <div className="mt-5 pt-4 border-t border-[#1D2733] text-center">
+            <span className="text-xs text-[#687789]">Already have an account? </span>
             <button
               onClick={onSwitchToLogin}
-              className="text-xs font-medium text-zinc-300 hover:text-white"
+              className="text-xs font-medium text-[#8BB8FF] hover:underline"
             >
               Sign In
             </button>

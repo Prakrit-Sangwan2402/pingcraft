@@ -6,40 +6,40 @@ export default function DeleteConfirmModal({ isOpen, onClose, onConfirm, title, 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div className="bg-[#12141c] border border-zinc-800 rounded-lg w-full max-w-sm p-5 shadow-2xl relative text-zinc-100">
+      <div className="bg-[#131A23] border border-[#263241] rounded-xl w-full max-w-sm p-6 shadow-2xl relative text-[#E8EDF4]">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-zinc-400 hover:text-white"
+          className="absolute top-4 right-4 text-[#9AA8B8] hover:text-[#E8EDF4]"
         >
           <X className="w-4 h-4" />
         </button>
 
         <div className="flex items-center gap-3 mb-3">
-          <div className="h-8 w-8 rounded-md bg-red-950/50 border border-red-800/60 flex items-center justify-center text-red-400 shrink-0">
+          <div className="h-8 w-8 rounded-lg bg-[#FF647C]/10 border border-[#FF647C]/25 flex items-center justify-center text-[#FF647C] shrink-0">
             <AlertTriangle className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-white">{title || 'Confirm Deletion'}</h3>
-            <p className="text-[11px] text-zinc-400">This action cannot be undone.</p>
+            <h3 className="text-sm font-semibold text-[#E8EDF4]">{title || 'Confirm Deletion'}</h3>
+            <p className="text-[11px] text-[#9AA8B8]">This action cannot be undone.</p>
           </div>
         </div>
 
-        <p className="text-xs text-zinc-300 mb-5 bg-[#0b0d12] p-2.5 rounded border border-zinc-800">
+        <p className="text-xs text-[#9AA8B8] mb-5 bg-[#0E131A] p-3 rounded-lg border border-[#263241]">
           {message || 'Are you sure you want to delete this resource and all historical telemetry?'}
         </p>
 
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-2.5">
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-3 py-1.5 text-xs font-medium text-zinc-400 hover:text-white rounded transition-colors"
+            className="px-3.5 py-1.5 text-xs font-medium text-[#9AA8B8] hover:text-[#E8EDF4] bg-[#192330] hover:bg-[#202B39] border border-[#263241] rounded-lg transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
             disabled={loading}
-            className="px-3.5 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-500 rounded transition-colors flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+            className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#FF647C] hover:bg-[#FF647C]/90 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm disabled:opacity-50"
           >
             <Trash2 className="w-3.5 h-3.5" />
             {loading ? 'Deleting...' : 'Delete'}

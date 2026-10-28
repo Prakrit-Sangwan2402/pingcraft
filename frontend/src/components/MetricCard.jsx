@@ -2,23 +2,23 @@ import React from 'react';
 
 export default function MetricCard({ title, value, subtext, icon: Icon, tone = 'default' }) {
   const toneClasses = {
-    default: 'text-zinc-100',
-    success: 'text-emerald-400',
-    warning: 'text-amber-400',
-    danger: 'text-red-400',
-    brand: 'text-zinc-100'
+    default: 'text-[#E8EDF4]',
+    success: 'text-[#45D483]',
+    warning: 'text-[#F2B866]',
+    danger: 'text-[#FF647C]',
+    brand: 'text-[#E8EDF4]'
   };
 
   return (
-    <div className="bg-[#12141c] border border-zinc-800 rounded-xl p-5 shadow-sm transition-all hover:border-zinc-700">
-      <div className="flex items-center justify-between mb-2.5">
-        <span className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">{title}</span>
-        {Icon && <Icon className="w-5 h-5 text-zinc-500" />}
+    <div className="bg-[#131A23] border border-[#263241] rounded-xl p-4 shadow-sm transition-colors hover:border-[#3DD6C6]/30">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] font-medium tracking-wider text-[#9AA8B8] uppercase">{title}</span>
+        {Icon && <Icon className="w-4 h-4 text-[#687789]" />}
       </div>
-      <div className={`text-3xl font-bold tracking-tight font-mono ${toneClasses[tone] || toneClasses.default}`}>
-        {value !== null && value !== undefined ? value : <span className="text-zinc-600 font-sans text-base font-normal">No data</span>}
+      <div className={`text-2xl font-semibold tracking-tight font-mono tabular-nums ${toneClasses[tone] || toneClasses.default}`}>
+        {value !== null && value !== undefined ? value : <span className="text-[#687789] font-sans text-sm font-normal">No data</span>}
       </div>
-      {subtext && <p className="text-xs text-zinc-400 mt-1.5">{subtext}</p>}
+      {subtext && <p className="text-xs text-[#687789] mt-1">{subtext}</p>}
     </div>
   );
 }
